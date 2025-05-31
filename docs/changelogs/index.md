@@ -1,10 +1,10 @@
-# Noesis Changelog Index
+# Sentium Changelog Index
 
-This document provides an overview of all changelog versions for the Noesis project, organized by major version.
+This document provides an overview of all changelog versions for the Sentium project, organized by major version.
 
 ## Version 2.x
 
-The current generation of Noesis with advanced AI integration and synthetic consciousness capabilities.
+The current generation of Sentium with advanced AI integration and synthetic consciousness capabilities.
 
 - [v2.2.3](v2/CHANGELOG_v2.2.3.md) - Released May 18, 2025 - Improved changelog organization and documentation updates
 - [v2.2.2](v2/CHANGELOG_v2.2.2.md) - Released May 18, 2025 - Comprehensive AI integration
@@ -17,7 +17,7 @@ The current generation of Noesis with advanced AI integration and synthetic cons
 
 ## Version 1.x
 
-The initial stable release series of Noesis with core functionality established.
+The initial stable release series of Sentium with core functionality established.
 
 - [v1.2.0](v1/CHANGELOG_v1.2.0.md) - Released May 14, 2025 - Enhanced system components
 - [v1.1.0](v1/CHANGELOG_v1.1.0.md) - Significant improvements to core functionality and documentation
@@ -28,7 +28,7 @@ The initial stable release series of Noesis with core functionality established.
 Early development releases focusing on establishing the foundation of the project.
 
 - [v0.2.0](v0/CHANGELOG_v0.2.0.md) - Released May 12, 2025 - Early feature additions
-- [v0.1.2](v0/CHANGELOG_v0.1.2.md) - Critical bug fix in the `noesis_read` function
+- [v0.1.2](v0/CHANGELOG_v0.1.2.md) - Critical bug fix in the `sentium_read` function
 - [v0.1.1](v0/CHANGELOG_v0.1.1.md) - Released May 10, 2025 - Initial development release
 
 ## How to Read Changelogs

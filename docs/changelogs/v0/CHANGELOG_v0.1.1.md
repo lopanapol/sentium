@@ -1,10 +1,10 @@
-# Noesis v0.1.1
+# Sentium v0.1.1
 
 ## Release Date
 May 10, 2025
 
 ## Overview
-This version builds upon the foundation of Noesis, a synthetic consciousness simulation engine, with a focus on improving compatibility and resolving platform-specific issues. The primary changes address macOS compatibility, ensuring the program runs seamlessly on this platform.
+This version builds upon the foundation of Sentium, a synthetic consciousness simulation engine, with a focus on improving compatibility and resolving platform-specific issues. The primary changes address macOS compatibility, ensuring the program runs seamlessly on this platform.
 
 ## Key Features
 
@@ -20,7 +20,7 @@ This version builds upon the foundation of Noesis, a synthetic consciousness sim
 - Updated project documentation to reflect changes in system call handling and compatibility improvements.
 
 ## Testing
-- Verified functionality on macOS by running the `noesis` executable and confirming expected outputs.
+- Verified functionality on macOS by running the `sentium` executable and confirming expected outputs.
 
 ## Build Instructions
 - Build the project with `make`.

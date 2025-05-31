@@ -1,15 +1,15 @@
 #!/usr/bin/env fish
 #
-# Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)
-# Licensed under Noesis License - See LICENSE file for details
+# Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+# Licensed under Sentium License - See LICENSE file for details
 #
 
-# intent.fish - Central implementation and main entry point for the Noesis system
+# intent.fish - Central implementation and main entry point for the Sentium system
 # This file combines functionality from main.fish and fish-only-run.fish making intent.fish
-# the central component of the Noesis system
+# the central component of the Sentium system
 
-# Current version of Noesis
-set -g NOESIS_VERSION "2.2.2"
+# Current version of Sentium
+set -g SENTIUM_VERSION "2.2.2"
 
 # Make sure color variables are available
 # These are defined in run.fish but we need to ensure they're accessible here
@@ -44,7 +44,7 @@ source system/memory/quantum/field/quantum-field.fish
 
 # Initialize all systems
 function initialize_systems
-    echo "$YELLOW"Initializing Noesis systems..."$NC"
+    echo "$YELLOW"Initializing Sentium systems..."$NC"
     echo
     
     # Initialize core systems
@@ -249,7 +249,7 @@ function process_intention
             
         case "clear"
             clear
-            echo "$CYAN"NOESIS Cognitive Interface"$NC"
+            echo "$CYAN"SENTIUM Cognitive Interface"$NC"
             
         case "quantum"
             log_with_timestamp "Switching to quantum mode" "INFO"
@@ -306,14 +306,14 @@ end
 
 # Handle IO - main interaction loop
 function handle_io
-    echo "$CYAN"Welcome to NOESIS intent system"$NC"
+    echo "$CYAN"Welcome to SENTIUM intent system"$NC"
     echo
     echo "Type '$GREEN'help'$NC' for available commands"
     echo "Type '$GREEN'exit'$NC' to exit"
     
     while true
         echo
-        read -P "$GREEN""noesis > ""$NC" intention
+        read -P "$GREEN""sentium > ""$NC" intention
         echo
         
         if test -z "$intention"
@@ -333,7 +333,7 @@ end
 
 # Quantum interaction loop
 function handle_quantum_io
-    echo "$CYAN"Welcome to NOESIS Quantum Interface"$NC"
+    echo "$CYAN"Welcome to SENTIUM Quantum Interface"$NC"
     echo
     echo "Available quantum demos:"
     echo "  $GREEN- demo_quantum_field:$NC       Interactive quantum field demo"
@@ -426,7 +426,7 @@ function handle_quantum_io
                 
             case "clear"
                 clear
-                echo "$CYAN"NOESIS Quantum Interface"$NC"
+                echo "$CYAN"SENTIUM Quantum Interface"$NC"
                 
             case "exit" "e"
                 echo
@@ -486,9 +486,9 @@ function main
     handle_io
     echo
     if functions -q log_with_timestamp
-        log_with_timestamp "NOESIS system exiting" "INFO"
+        log_with_timestamp "SENTIUM system exiting" "INFO"
     else
-        echo $YELLOW"NOESIS system exiting"$NC
+        echo $YELLOW"SENTIUM system exiting"$NC
     end
     echo
     return 0

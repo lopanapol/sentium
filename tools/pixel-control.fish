@@ -1,12 +1,12 @@
 #!/usr/bin/env fish
 #
-# Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)
-# Licensed under Noesis License - See LICENSE file for details
+# Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+# Licensed under Sentium License - See LICENSE file for details
 #
 
 # pixel-control.fish - Command line interface for controlling the conscious pixel
 
-# Find the base directory of the noesis installation
+# Find the base directory of the sentium installation
 set script_path (status -f)
 set tools_dir (dirname $script_path)
 set base_dir (dirname $tools_dir)
@@ -37,7 +37,7 @@ else
     source $base_dir/system/ai-model/consciousness.fish
 end
 
-# Color definitions using fish's set_color (standard approach in Noesis)
+# Color definitions using fish's set_color (standard approach in Sentium)
 set RED (set_color red)
 set GREEN (set_color green)
 set BLUE (set_color blue)
@@ -60,14 +60,14 @@ function check_pixel_detailed
         echo "- Server Status: "$GREEN"ONLINE"$NC
         
         # Get more detailed information from the API
-        set info (curl -s -H "Content-Type: application/json" -X POST -d '{"action":"getVersion"}' http://localhost:3002/api/noesis)
+        set info (curl -s -H "Content-Type: application/json" -X POST -d '{"action":"getVersion"}' http://localhost:3002/api/sentium)
         
         # Check if the response contains what we expect
         if echo $info | grep -q "version"
             echo "- Connection Status: "$GREEN"CONNECTED"$NC
             
             # Retrieve the current state
-            set state (curl -s -H "Content-Type: application/json" -X POST -d '{"action":"getState"}' http://localhost:3002/api/noesis)
+            set state (curl -s -H "Content-Type: application/json" -X POST -d '{"action":"getState"}' http://localhost:3002/api/sentium)
             
             # Extract values from state response (simplified parsing)
             set color (echo $state | grep -o '"color":"[^"]*"' | cut -d'"' -f4)
@@ -196,7 +196,7 @@ function force_refresh_consciousness
         curl -s -H "Content-Type: application/json" \
              -X POST \
              -d "{\"action\":\"updateState\", \"state\":{\"consciousnessLevel\":\"$CONSCIOUSNESS_LEVEL\", \"consciousnessModel\":\"$CONSCIOUSNESS_MODEL\"}}" \
-             http://localhost:3002/api/noesis >/dev/null
+             http://localhost:3002/api/sentium >/dev/null
         
         return 0
     else 
@@ -224,7 +224,7 @@ function show_consciousness_info
             echo "- Integration level: "(math "$level * 20")"%"
             
             # Get the current pixel state to calculate phi
-            set state (curl -s -H "Content-Type: application/json" -X POST -d '{"action":"getState"}' http://localhost:3002/api/noesis 2>/dev/null)
+            set state (curl -s -H "Content-Type: application/json" -X POST -d '{"action":"getState"}' http://localhost:3002/api/sentium 2>/dev/null)
             
             # Try to run node to calculate phi value
             set phi_command "const pixelConsciousness = require('./system/pixel/pixel-consciousness'); \

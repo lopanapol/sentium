@@ -1,10 +1,10 @@
 #!/usr/bin/env fish
 #
-# Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)
-# Licensed under Noesis License - See LICENSE file for details
+# Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+# Licensed under Sentium License - See LICENSE file for details
 #
 
-# memory.fish - Memory management implementations for Noesis
+# memory.fish - Memory management implementations for Sentium
 
 # Define memory constants
 set -g MAX_MEMORIES 1000

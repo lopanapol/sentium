@@ -1,13 +1,13 @@
 #!/usr/bin/env fish
 #
-# Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)
-# Licensed under Noesis License - See LICENSE file for details
+# Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+# Licensed under Sentium License - See LICENSE file for details
 #
 
-# data.fish - Data storage and retrieval implementation for Noesis
+# data.fish - Data storage and retrieval implementation for Sentium
 
 # Source required dependencies
-source src/utils/noesis_lib.fish
+source src/utils/sentium_lib.fish
 
 # Constants
 set -g MAX_DATA_ENTRIES 1000

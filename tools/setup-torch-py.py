@@ -84,7 +84,7 @@ def install_pytorch_minimal():
     # Try to install tinygrad as a fallback (only if we need advanced features)
     success = run_command("pip install tinygrad")
     
-    # Create a compatibility layer for the Noesis system
+    # Create a compatibility layer for the Sentium system
     print("Creating comprehensive PyTorch API compatibility layer...")
     compat_code = """
 # Enhanced PyTorch compatibility layer for Python 3.13+
@@ -161,7 +161,7 @@ sys.modules['torch'] = FakeTorch()
 warnings.warn("Using PyTorch compatibility layer. Limited functionality available.")
 print("Enhanced PyTorch compatibility layer initialized for Python 3.13+")
 """
-        with open(os.path.expanduser("~/.noesis/torch_compat.py"), "w") as f:
+        with open(os.path.expanduser("~/.sentium/torch_compat.py"), "w") as f:
             f.write(compat_code)
         return True
     return False
@@ -211,9 +211,9 @@ def install_transformers():
         
         # Create a compatibility module
         print("Creating transformers compatibility module...")
-        os.makedirs(os.path.expanduser("~/.noesis/transformers"), exist_ok=True)
+        os.makedirs(os.path.expanduser("~/.sentium/transformers"), exist_ok=True)
         
-        with open(os.path.expanduser("~/.noesis/transformers/__init__.py"), "w") as f:
+        with open(os.path.expanduser("~/.sentium/transformers/__init__.py"), "w") as f:
             f.write("""
 import sys
 import warnings
@@ -242,7 +242,7 @@ warnings.warn("Using transformers compatibility stub. Most functionality unavail
         # Test if the compatibility module works
         try:
             import sys
-            sys.path.insert(0, os.path.expanduser("~/.noesis"))
+            sys.path.insert(0, os.path.expanduser("~/.sentium"))
             import transformers
             print(f"Transformers compatibility layer loaded: {transformers.__version__}")
             transformers_installed = True
@@ -256,8 +256,8 @@ def main():
     print(f"Python version: {sys.version}")
     print(f"System: {platform.system()} {platform.machine()}")
     
-    # Create .noesis directory if it doesn't exist
-    os.makedirs(os.path.expanduser("~/.noesis"), exist_ok=True)
+    # Create .sentium directory if it doesn't exist
+    os.makedirs(os.path.expanduser("~/.sentium"), exist_ok=True)
     
     print("\n" + "="*60)
     print("PHASE 1: PyTorch Installation")
@@ -288,7 +288,7 @@ def main():
     if not transformers_success:
         print("Standard transformers installation failed. Will use compatibility layer.")
     
-    # Install essential dependencies for Noesis
+    # Install essential dependencies for Sentium
     print("\n" + "="*60)
     print("PHASE 4: Installing Additional Dependencies")
     print("="*60)

@@ -1,24 +1,24 @@
 #!/usr/bin/env fish
 #
-# Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)
-# Licensed under Noesis License - See LICENSE file for details
+# Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+# Licensed under Sentium License - See LICENSE file for details
 #
 
 #********************************************************************
 #*                                                                  *
-#*                 NOESIS: SYNTHETIC CONSCIOUS                      *
+#*                 SENTIUM: SYNTHETIC CONSCIOUS                      *
 #*                                                                  *
 #********************************************************************
 
 # Source required dependencies
 # Use system directory structure instead of src
-# source src/utils/noesis_lib.fish
+# source src/utils/sentium_lib.fish
 # This file is now directly in system/perception/unit.fish, no need to source
 
 # Define access mode macros
 set -g F_OK 0
 
-# Perception functions for the Noesis system
+# Perception functions for the Sentium system
 # In the Fish version, these will use native Fish commands 
 # instead of raw syscalls for better portability
 

@@ -1,7 +1,7 @@
 {
-  "name": "noesis-api",
+  "name": "sentium-api",
   "version": "2.2.3",
-  "description": "Noesis System API Server",
+  "description": "Sentium System API Server",
   "main": "api-server.js",
   "scripts": {
     "start": "npm-run-all --parallel start:api start:web",

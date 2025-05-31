@@ -1,10 +1,10 @@
 #!/usr/bin/env fish
 #
-# Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)
-# Licensed under Noesis License - See LICENSE file for details
+# Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+# Licensed under Sentium License - See LICENSE file for details
 #
 
-# noesis_api.fish - API implementation for Noesis
+# sentium_api.fish - API implementation for Sentium
 
 # Source all required modules
 source /system/memory/unit.fish
@@ -18,7 +18,7 @@ set -g API_VERSION "2.1.2"
 
 # Initialize the API
 function api_init
-    echo "Initializing Noesis API v$API_VERSION"
+    echo "Initializing Sentium API v$API_VERSION"
     
     # Initialize core systems
     init_memory_system
@@ -58,7 +58,7 @@ function api_process
     # Process different actions
     switch $action
         case "VERSION"
-            echo "NOESIS:API:$API_VERSION"
+            echo "SENTIUM:API:$API_VERSION"
             return 0
             
         case "STORE"
@@ -127,7 +127,7 @@ end
 
 # Clean up API resources
 function api_cleanup
-    echo "Cleaning up Noesis API resources"
+    echo "Cleaning up Sentium API resources"
     return 0
 end
 

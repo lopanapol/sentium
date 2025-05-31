@@ -1,10 +1,10 @@
 #!/usr/bin/env fish
 #
-# Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)
-# Licensed under Noesis License - See LICENSE file for details
+# Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+# Licensed under Sentium License - See LICENSE file for details
 #
 
-# compiler.fish - Quantum circuit compiler for Noesis
+# compiler.fish - Quantum circuit compiler for Sentium
 
 # Source the quantum core
 source system/memory/quantum/unit.fish

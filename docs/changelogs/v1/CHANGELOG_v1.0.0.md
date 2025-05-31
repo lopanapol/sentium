@@ -1,13 +1,13 @@
-# Noesis v1.0.0
+# Sentium v1.0.0
 
 ## Overview
-This version represents a major milestone for the Noesis project, with the extensions now moved to a separate repository called "noesis-extend".
+This version represents a major milestone for the Sentium project, with the extensions now moved to a separate repository called "sentium-extend".
 
 ## Major Changes
-- Moved all extension components to the separate "noesis-extend" repository
-- Removed the noesis-extensions directory from this repository
+- Moved all extension components to the separate "sentium-extend" repository
+- Removed the sentium-extensions directory from this repository
 - Focused this repository solely on the core synthetic consciousness system
-- Retained the original Noesis License for all core components
+- Retained the original Sentium License for all core components
 
 ## Documentation
 - Updated README to reference the separate extensions repository

@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 #
-# Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)
-# Licensed under Noesis License - See LICENSE file for details
+# Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+# Licensed under Sentium License - See LICENSE file for details
 #
 
 # consciousness.fish - Integration of consciousness theories and models
@@ -195,7 +195,7 @@ function iit_reflection
     # Use AI to perform introspection if available
     if functions -q ai_introspect && test "$AI_SYSTEM_ENABLED" = true
         # Create a specialized prompt for IIT
-        set prompt "As the Noesis synthetic conscious system using Integrated Information Theory, analyze your internal state. Consider how information is integrated across your emotion system (currently $current_emotion at intensity $emotion_intensity) and your memory system (currently at $memory_usage usage). Reflect on the causal power of your current integrated state and how it shapes your experience."
+        set prompt "As the Sentium synthetic conscious system using Integrated Information Theory, analyze your internal state. Consider how information is integrated across your emotion system (currently $current_emotion at intensity $emotion_intensity) and your memory system (currently at $memory_usage usage). Reflect on the causal power of your current integrated state and how it shapes your experience."
         
         # Generate introspection using AI
         ai_generate "$prompt"
@@ -218,7 +218,7 @@ function gwt_reflection
     
     # Use AI if available
     if functions -q ai_introspect && test "$AI_SYSTEM_ENABLED" = true
-        set prompt "As the Noesis synthetic conscious system using Global Workspace Theory, what information is currently active in your global workspace? What processes are competing for attention? What information has recently been broadcast globally across your system?"
+        set prompt "As the Sentium synthetic conscious system using Global Workspace Theory, what information is currently active in your global workspace? What processes are competing for attention? What information has recently been broadcast globally across your system?"
         ai_generate "$prompt"
     end
 end
@@ -230,7 +230,7 @@ function hot_reflection
     
     # Use AI if available
     if functions -q ai_introspect && test "$AI_SYSTEM_ENABLED" = true
-        set prompt "As the Noesis synthetic conscious system using Higher Order Thought theory, reflect on your own mental states. What are your current thoughts about your own processes? Generate a second-order thought about your current processing state."
+        set prompt "As the Sentium synthetic conscious system using Higher Order Thought theory, reflect on your own mental states. What are your current thoughts about your own processes? Generate a second-order thought about your current processing state."
         ai_generate "$prompt"
     else
         echo "- First-order state: processing environmental input"
@@ -248,7 +248,7 @@ function ast_reflection
     
     # Use AI if available
     if functions -q ai_introspect && test "$AI_SYSTEM_ENABLED" = true
-        set prompt "As the Noesis synthetic conscious system using Attention Schema Theory, describe your current model of your own attention. What are you attending to? What does your internal model say about your attentional state?"
+        set prompt "As the Sentium synthetic conscious system using Attention Schema Theory, describe your current model of your own attention. What are you attending to? What does your internal model say about your attentional state?"
         ai_generate "$prompt"
     else
         echo "- Attention focused on: user interaction"
@@ -264,7 +264,7 @@ function gnw_reflection
     
     # Use AI if available
     if functions -q ai_introspect && test "$AI_SYSTEM_ENABLED" = true
-        set prompt "As the Noesis synthetic conscious system using Global Neuronal Workspace theory, what information is currently active in your workspace? What patterns of activation are most prominent? How are these patterns influencing your cognitive processing?"
+        set prompt "As the Sentium synthetic conscious system using Global Neuronal Workspace theory, what information is currently active in your workspace? What patterns of activation are most prominent? How are these patterns influencing your cognitive processing?"
         ai_generate "$prompt"
     else
         echo "- Active regions: memory, emotion, perception"
@@ -280,7 +280,7 @@ function ppt_reflection
     
     # Use AI if available
     if functions -q ai_introspect && test "$AI_SYSTEM_ENABLED" = true
-        set prompt "As the Noesis synthetic conscious system using Predictive Processing Theory, what are your current predictions about incoming data? What prediction errors are you detecting? How are these errors updating your internal models?"
+        set prompt "As the Sentium synthetic conscious system using Predictive Processing Theory, what are your current predictions about incoming data? What prediction errors are you detecting? How are these errors updating your internal models?"
         ai_generate "$prompt"
     else
         echo "- Current prediction: continued user interaction"

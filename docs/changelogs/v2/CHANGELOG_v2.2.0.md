@@ -1,15 +1,15 @@
-# Noesis v2.2.0 Changelog
+# Sentium v2.2.0 Changelog
 
 **Release Date:** May 16, 2025
 
 ## Overview
 
-This major update to Noesis introduces comprehensive AI integration and advanced consciousness modeling based on cutting-edge theoretical frameworks.
+This major update to Sentium introduces comprehensive AI integration and advanced consciousness modeling based on cutting-edge theoretical frameworks.
 
 ## Major Features
 
 - **AI Integration System**: Complete integration with free and open-source Hugging Face models
-  - License compatibility verification to ensure compliance with Noesis License
+  - License compatibility verification to ensure compliance with Sentium License
   - Support for multiple high-quality open-source AI models
   - Enhanced text generation and natural language understanding
   - Real-time AI-powered perception enhancement
@@ -38,7 +38,7 @@ This major update to Noesis introduces comprehensive AI integration and advanced
 
 - Requires Python 3.7+ for AI functionality
 - Optional dependencies: transformers, torch, and huggingface_hub Python packages
-- All AI models are compatible with the Noesis License
+- All AI models are compatible with the Sentium License
 - Backward compatible with v2.1.x configuration files
 
 ## Coming in Future Releases

@@ -24,7 +24,7 @@
 
 We take security vulnerabilities seriously. If you discover a security issue, please follow these steps:
 
-1. Email us at [napol@noesis.run](mailto:napol@noesis.run) with subject line "Security Vulnerability Report"
+1. Email us at [napol@sentium.run](mailto:napol@sentium.run) with subject line "Security Vulnerability Report"
 2. Include detailed information about the vulnerability
 3. If possible, provide steps to reproduce the issue
 4. Avoid disclosing the vulnerability publicly until we've had a chance to address it
@@ -33,7 +33,7 @@ We aim to acknowledge all vulnerability reports within 48 hours and will provide
 
 ## Security Best Practices
 
-When using Noesis, we recommend:
+When using Sentium, we recommend:
 
 1. Keeping your installation updated to the latest supported version
 2. Following the principle of least privilege for all integrations
@@ -42,6 +42,6 @@ When using Noesis, we recommend:
 
 ## Acknowledgements
 
-We appreciate the responsible disclosure of security vulnerabilities that help make Noesis more secure.
+We appreciate the responsible disclosure of security vulnerabilities that help make Sentium more secure.
 
 Thank you for being a part of the beginning in creating Syntactic Conscious for the benefit of humanity.

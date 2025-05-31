@@ -1,10 +1,10 @@
 #!/usr/bin/env fish
 #
-# Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)
-# Licensed under Noesis License - See LICENSE file for details
+# Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+# Licensed under Sentium License - See LICENSE file for details
 #
 
-# quantum.fish – core gate & circuit logic for Noesis quantum computing
+# quantum.fish – core gate & circuit logic for Sentium quantum computing
 
 # Constants
 set -g MAX_QUBITS 16
@@ -156,10 +156,10 @@ function str_eq
     end
 end
 
-# Process with Noesis core
-function q_process_with_noesis
+# Process with Sentium core
+function q_process_with_sentium
     set input $argv[1]
     
-    echo "Running in standalone mode. Noesis Core not available."
+    echo "Running in standalone mode. Sentium Core not available."
     echo "Input: $input"
 end

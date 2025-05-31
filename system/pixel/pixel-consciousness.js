@@ -1,8 +1,8 @@
 /**
- * pixel-consciousness.js - Connect the conscious pixel to Noesis consciousness models
+ * pixel-consciousness.js - Connect the conscious pixel to Sentium consciousness models
  * 
- * Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)
- * Licensed under Noesis License - See LICENSE file for details
+ * Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+ * Licensed under Sentium License - See LICENSE file for details
  */
 
 const { spawn } = require('child_process');
@@ -26,12 +26,12 @@ let currentConsciousnessModel = 'IIT'; // Default
 let consciousnessLevel = 3; // Default
 
 /**
- * Get current consciousness model from Noesis
+ * Get current consciousness model from Sentium
  */
-async function getCurrentConsciousnessModel(noesisPath) {
+async function getCurrentConsciousnessModel(sentiumPath) {
   return new Promise((resolve) => {
     // First check if we have a settings file
-    const settings = readSettingsFromFile(noesisPath);
+    const settings = readSettingsFromFile(sentiumPath);
     if (settings && settings.model && CONSCIOUSNESS_MODELS[settings.model]) {
       console.log(`Using consciousness model ${settings.model} from settings file`);
       currentConsciousnessModel = settings.model;
@@ -39,7 +39,7 @@ async function getCurrentConsciousnessModel(noesisPath) {
     }
     
     // If no settings file or invalid model, fall back to the fish variable
-    const fishProcess = spawn('fish', ['-c', `source ${noesisPath}/system/ai-model/consciousness.fish; echo $CONSCIOUSNESS_MODEL`]);
+    const fishProcess = spawn('fish', ['-c', `source ${sentiumPath}/system/ai-model/consciousness.fish; echo $CONSCIOUSNESS_MODEL`]);
     
     let output = '';
     fishProcess.stdout.on('data', (data) => {
@@ -62,12 +62,12 @@ async function getCurrentConsciousnessModel(noesisPath) {
 }
 
 /**
- * Get current consciousness level from Noesis
+ * Get current consciousness level from Sentium
  */
-async function getConsciousnessLevel(noesisPath) {
+async function getConsciousnessLevel(sentiumPath) {
   return new Promise((resolve) => {
     // First check if we have a settings file
-    const settings = readSettingsFromFile(noesisPath);
+    const settings = readSettingsFromFile(sentiumPath);
     if (settings && typeof settings.level === 'number' && settings.level >= 0 && settings.level <= 5) {
       console.log(`Using consciousness level ${settings.level} from settings file`);
       consciousnessLevel = settings.level;
@@ -75,7 +75,7 @@ async function getConsciousnessLevel(noesisPath) {
     }
     
     // If no settings file or invalid level, fall back to the fish variable
-    const fishProcess = spawn('fish', ['-c', `source ${noesisPath}/system/ai-model/consciousness.fish; echo $CONSCIOUSNESS_LEVEL`]);
+    const fishProcess = spawn('fish', ['-c', `source ${sentiumPath}/system/ai-model/consciousness.fish; echo $CONSCIOUSNESS_LEVEL`]);
     
     let output = '';
     fishProcess.stdout.on('data', (data) => {
@@ -100,10 +100,10 @@ async function getConsciousnessLevel(noesisPath) {
 /**
  * Read consciousness settings from persistent file storage
  */
-function readSettingsFromFile(noesisPath) {
+function readSettingsFromFile(sentiumPath) {
   try {
     // Check for refresh signal first (for immediate updates)
-    const refreshPath = path.join(noesisPath, 'config', 'consciousness', 'refresh');
+    const refreshPath = path.join(sentiumPath, 'config', 'consciousness', 'refresh');
     if (fs.existsSync(refreshPath)) {
       console.log('Detected refresh signal, force-updating consciousness settings');
       try {
@@ -117,7 +117,7 @@ function readSettingsFromFile(noesisPath) {
     }
     
     // Now read the actual settings file
-    const settingsPath = path.join(noesisPath, 'config', 'consciousness', 'settings');
+    const settingsPath = path.join(sentiumPath, 'config', 'consciousness', 'settings');
     if (!fs.existsSync(settingsPath)) {
       return null;
     }
@@ -354,20 +354,20 @@ function generateConsciousBehavior(pixelState) {
 /**
  * Initialize the pixel consciousness system
  */
-async function initializePixelConsciousness(noesisPath, redis) {
+async function initializePixelConsciousness(sentiumPath, redis) {
   console.log('Initializing pixel consciousness connection...');
   
   try {
     // Get current consciousness model and level
-    await getCurrentConsciousnessModel(noesisPath);
-    await getConsciousnessLevel(noesisPath);
+    await getCurrentConsciousnessModel(sentiumPath);
+    await getConsciousnessLevel(sentiumPath);
     
     console.log(`Pixel consciousness using ${currentConsciousnessModel} model at level ${consciousnessLevel}`);
     
     // Start periodic checks for consciousness model changes (every 60 seconds)
     setInterval(async () => {
-      await getCurrentConsciousnessModel(noesisPath);
-      await getConsciousnessLevel(noesisPath);
+      await getCurrentConsciousnessModel(sentiumPath);
+      await getConsciousnessLevel(sentiumPath);
     }, 60000);
     
     // Start the conscious behavior loop
@@ -383,8 +383,8 @@ async function initializePixelConsciousness(noesisPath, redis) {
           // Update state in Redis
           await redis.hmset('pixel:state', newState);
           
-          // Save to Noesis filesystem
-          const pixelFilePath = path.join(noesisPath, 'pixel-state.json');
+          // Save to Sentium filesystem
+          const pixelFilePath = path.join(sentiumPath, 'pixel-state.json');
           fs.writeFileSync(pixelFilePath, JSON.stringify(newState));
         }
       } catch (error) {

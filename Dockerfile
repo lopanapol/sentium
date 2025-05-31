@@ -1,4 +1,4 @@
-# Noesis Dockerfile
+# Sentium Dockerfile
 # Base image with Fish shell
 FROM ubuntu:22.04
 
@@ -26,7 +26,7 @@ COPY . .
 RUN chmod +x *.fish
 
 # Set environment variables
-ENV NOESIS_VERSION="2.2.2" 
+ENV SENTIUM_VERSION="2.2.2" 
 
 # Expose any necessary ports (if applicable)
 # EXPOSE 8080

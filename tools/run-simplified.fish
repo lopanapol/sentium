@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 #
-# Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)
-# Licensed under Noesis License - See LICENSE file for details
+# Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+# Licensed under Sentium License - See LICENSE file for details
 #
 
 # run_simplified.fish - A simplified version of run.fish for debugging
@@ -76,7 +76,7 @@ end
 function print_banner
     echo
     echo "$PINK━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$NC"
-    echo "$PINK  NOESIS v2.1.2 - SIMPLIFIED         $NC"
+    echo "$PINK  SENTIUM v2.1.2 - SIMPLIFIED         $NC"
     echo "$PINK━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$NC"
     echo
 end

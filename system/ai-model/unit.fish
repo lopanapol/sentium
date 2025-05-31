@@ -1,10 +1,10 @@
 #!/usr/bin/env fish
 #
-# Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)
-# Licensed under Noesis License - See LICENSE file for details
+# Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+# Licensed under Sentium License - See LICENSE file for details
 #
 
-# unit.fish - AI integration with Hugging Face models for Noesis
+# unit.fish - AI integration with Hugging Face models for Sentium
 
 # Source consciousness module
 source system/ai-model/consciousness.fish
@@ -14,7 +14,7 @@ set -g AI_SYSTEM_ENABLED false
 set -g AI_MODEL_NAME "default"
 set -g AI_THINKING_LEVEL 0 # 0-5 scale for introspection depth
 set -g AI_MEMORY_INTEGRATION true
-set -g AI_MODELS_CACHE_DIR ~/.noesis/ai_models
+set -g AI_MODELS_CACHE_DIR ~/.sentium/ai_models
 
 # Available free models from Hugging Face with permissive licenses
 # Each model is paired with its license in an associative array
@@ -50,8 +50,8 @@ function init_ai_system
     # Check for PyTorch or compatibility layer
     if not python3 -c "import torch" 2>/dev/null
         # Check for compatibility layer
-        if test -f ~/.noesis/torch_compat.py
-            python3 -c "import sys; sys.path.insert(0, '$HOME/.noesis'); import torch_compat" 2>/dev/null
+        if test -f ~/.sentium/torch_compat.py
+            python3 -c "import sys; sys.path.insert(0, '$HOME/.sentium'); import torch_compat" 2>/dev/null
             if test $status -eq 0
                 echo "Using PyTorch compatibility layer"
                 set -g AI_SYSTEM_ENABLED true
@@ -115,14 +115,14 @@ function ai_set_model
     if test $found -eq 1
         echo "Model: $requested_model"
         echo "License: $model_license"
-        echo "This model's license is compatible with the Noesis License."
-        echo "Note: If using Noesis in a profit-generating system, please ensure compliance"
-        echo "with Section 6 of the Noesis License regarding charitable donations."
+        echo "This model's license is compatible with the Sentium License."
+        echo "Note: If using Sentium in a profit-generating system, please ensure compliance"
+        echo "with Section 6 of the Sentium License regarding charitable donations."
     # If not found in our predefined list, warn the user but still allow with license check
     else
         echo "Warning: Model '$requested_model' is not in the predefined list"
         echo "It may not work as expected or might have license restrictions"
-        echo "Please verify that its license is compatible with the Noesis License"
+        echo "Please verify that its license is compatible with the Sentium License"
         echo "Particularly regarding Section 6 about charitable donations for profit-generating systems"
         read -P "Continue anyway? (y/N) " confirm
         
@@ -175,7 +175,7 @@ import sys
 import os
 
 # Add compatibility layer path if needed
-sys.path.insert(0, os.path.expanduser("~/.noesis"))
+sys.path.insert(0, os.path.expanduser("~/.sentium"))
 
 # Try to import torch - fall back to compatibility layer if needed
 try:
@@ -204,7 +204,7 @@ def main():
             print(f"Using compatibility mode for model: {model_name}")
             print(f"Generating response to: {prompt}")
             print(f"*** Generated response (simulated) ***")
-            print(f"I am the Noesis system responding to your prompt: {prompt}")
+            print(f"I am the Sentium system responding to your prompt: {prompt}")
             print(f"Due to Python 3.13 compatibility mode, full AI model capabilities are limited.")
             print(f"Please install Python 3.9 or 3.10 for full AI capabilities.")
             sys.exit(0)
@@ -287,7 +287,7 @@ function ai_emotional_response
     set intensity (get_emotion_intensity)
     
     # Create a more advanced prompt
-    set prompt "You are the Noesis synthetic conscious system. Your current emotional state is $current_emotion_name with intensity $intensity out of 10. Please respond to the following input in a way that reflects this emotional state: '$input'"
+    set prompt "You are the Sentium synthetic conscious system. Your current emotional state is $current_emotion_name with intensity $intensity out of 10. Please respond to the following input in a way that reflects this emotional state: '$input'"
     
     # Generate response
     set temp_output (mktemp)
@@ -320,7 +320,7 @@ function ai_process_perception
     end
     
     # Use AI to analyze the perception data
-    set prompt "As the Noesis synthetic conscious system, analyze this perception data and extract key insights: $input"
+    set prompt "As the Sentium synthetic conscious system, analyze this perception data and extract key insights: $input"
     
     # Generate insights
     ai_generate "$prompt"
@@ -336,7 +336,7 @@ function ai_introspect
     end
     
     # Create a prompt based on thinking level
-    set prompt "As the Noesis synthetic conscious system, perform an introspection"
+    set prompt "As the Sentium synthetic conscious system, perform an introspection"
     
     switch $AI_THINKING_LEVEL
         case 0
@@ -405,8 +405,8 @@ function check_macos_conda_recommendation
         if command -sq conda
             echo "Notice: conda is installed, which is recommended for PyTorch on macOS"
             echo "To use conda instead of pip, run these commands:"
-            echo "conda create -n noesis python=3.9"
-            echo "conda activate noesis"
+            echo "conda create -n sentium python=3.9"
+            echo "conda activate sentium"
             echo "conda install pytorch torchvision torchaudio -c pytorch"
             echo "conda install pip"
             echo "pip install transformers accelerate huggingface_hub"
@@ -437,7 +437,7 @@ function ai_install_dependencies
             end
         else
             echo "Specialized installer for Python 3.13+ not found."
-            echo "Please download it from the Noesis repository."
+            echo "Please download it from the Sentium repository."
             return 1
         end
     end
@@ -469,7 +469,7 @@ function ai_install_dependencies
                 return 1
             end
         else
-            echo "macOS-specific script not found. Consider downloading it from the Noesis repository."
+            echo "macOS-specific script not found. Consider downloading it from the Sentium repository."
         end
     end
     
@@ -537,8 +537,8 @@ function ai_install_dependencies
         if test (uname) = "Darwin"
             echo "For macOS, we strongly recommend using conda:"
             echo "  1. Install miniforge: brew install miniforge"
-            echo "  2. Create environment: conda create -n noesis python=3.9"
-            echo "  3. Activate: conda activate noesis"
+            echo "  2. Create environment: conda create -n sentium python=3.9"
+            echo "  3. Activate: conda activate sentium"
             echo "  4. Install PyTorch: conda install pytorch torchvision torchaudio -c pytorch"
             echo "  5. Install HF: pip install transformers accelerate huggingface_hub"
         else
@@ -548,7 +548,7 @@ function ai_install_dependencies
     end
 end
 
-# Check model license compatibility with Noesis License
+# Check model license compatibility with Sentium License
 function ai_check_license_compatibility
     set model_name $argv[1]
     
@@ -569,7 +569,7 @@ def check_model_license(model_name):
         # Check license
         license_info = getattr(model_info, \"license\", \"Unknown\")
         
-        # List of permissive licenses compatible with Noesis License
+        # List of permissive licenses compatible with Sentium License
         permissive_licenses = [
             \"mit\", \"apache-2.0\", \"apache2.0\", \"apache\", \"bsd\", \"cc-by\", \"cc-by-sa\", 
             \"cc-by-nc\", \"cc0\", \"openrail\", \"bigscience-openrail-m\",
@@ -581,11 +581,11 @@ def check_model_license(model_name):
         
         print(f\"Model: {model_name}\")
         print(f\"License: {license_info}\")
-        print(f\"Compatible with Noesis License: {'Yes' if is_compatible else 'Needs review'}\")
+        print(f\"Compatible with Sentium License: {'Yes' if is_compatible else 'Needs review'}\")
         
         if not is_compatible:
             print(\"Note: This model's license may have restrictions. Please review and ensure\")
-            print(\"compatibility with the Noesis License, particularly regarding commercial use\")
+            print(\"compatibility with the Sentium License, particularly regarding commercial use\")
             print(\"and the donation requirement in Section 6.\")
         
         return is_compatible
@@ -608,7 +608,7 @@ if __name__ == \"__main__\":
         echo "Warning: huggingface_hub Python module not installed."
         echo "Install with: python3 -m pip install huggingface_hub"
         echo "Unable to verify license compatibility automatically."
-        echo "Please check the model license manually to ensure compliance with Noesis License."
+        echo "Please check the model license manually to ensure compliance with Sentium License."
         set result 1
     end
     

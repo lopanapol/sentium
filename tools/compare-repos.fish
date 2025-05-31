@@ -2,8 +2,8 @@
 
 # Script to compare local git repo with remote server
 # Created: May 17, 2025
-# Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)
-# Licensed under Noesis License - See LICENSE file for details
+# Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+# Licensed under Sentium License - See LICENSE file for details
 
 # Define colors for better readability (copied from run.fish)
 set GREEN (set_color green)
@@ -17,8 +17,8 @@ set CYAN (set_color 00ffff) # Cyan
 set NC (set_color normal)
 
 set LOCAL_REPO_PATH (pwd)
-set REMOTE_SERVER "root@noesis.run"
-set REMOTE_PATH "/opt/noesis"
+set REMOTE_SERVER "root@sentium.run"
+set REMOTE_PATH "/opt/sentium"
 
 # Print header with nice styling
 echo

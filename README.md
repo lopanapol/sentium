@@ -1,16 +1,16 @@
-# Noesis v2.2.3
+# Sentium v2.2.3
 
-![Noesis Logo](noesis-logo.jpg)
+![Sentium Logo](sentium-logo.jpg)
 
 > Synthetic Conscious
 
 ## Overview
 
-Noesis is a synthetic consciousness simulation engine designed to explore the principles of artificial consciousness and cognition. The project is now structured as two separate repositories with different licenses to facilitate wider adoption and integration.
+Sentium is a synthetic consciousness simulation engine designed to explore the principles of artificial consciousness and cognition. The project is now structured as two separate repositories with different licenses to facilitate wider adoption and integration.
 
 ## AI Installation Options
 
-Noesis includes several methods to install AI dependencies, depending on your needs:
+Sentium includes several methods to install AI dependencies, depending on your needs:
 
 1. **Fast Installation (Recommended)**: 
    ```
@@ -37,17 +37,17 @@ Noesis includes several methods to install AI dependencies, depending on your ne
    Comprehensive installation that works across platforms.
 
 5. **In-app Installation**:
-   Run Noesis and use the command `ai install` within the interface.
+   Run Sentium and use the command `ai install` within the interface.
 
 ## Terminal Preview
 
-![Noesis Terminal](noesis-cli.png)
+![Sentium Terminal](sentium-cli.png)
 
 ![Conscious Menu](conscious-menu.jpg)
 
 ### Directory Structure
 ```
-noesis/
+sentium/
 ├── soul/                                  # Consciousness core implementation
 │   └── intent.fish                        # Intent processing system
 ├── system/                                # System components
@@ -114,21 +114,21 @@ noesis/
 ├── run.fish                               # Main run script for Fish shell
 ├── Dockerfile                             # Docker configuration file
 ├── LICENSE                                # License file
-└── noesis-logo.jpg                        # Project logo image
+└── sentium-logo.jpg                        # Project logo image
 ```
 
 ## License Information
 
-This repository is licensed under the custom [Noesis License](LICENSE) which includes
+This repository is licensed under the custom [Sentium License](LICENSE) which includes
 requirements for attribution and profit-sharing for commercial use.
 
 ## Documentation
 
-Documentation for Noesis is organized into several key resources:
+Documentation for Sentium is organized into several key resources:
 
 ## AI and Consciousness Integration
 
-Noesis v2.2.3 includes comprehensive AI integration with free models from Hugging Face to enhance synthetic consciousness capabilities. Located in the `system/ai-model` directory, the system implements various consciousness theories:
+Sentium v2.2.3 includes comprehensive AI integration with free models from Hugging Face to enhance synthetic consciousness capabilities. Located in the `system/ai-model` directory, the system implements various consciousness theories:
 
 > **Note**: The legacy `system/ai` directory is deprecated and will be removed in future versions. Please use the `system/ai-model` components instead.
 
@@ -142,7 +142,7 @@ Noesis v2.2.3 includes comprehensive AI integration with free models from Huggin
 ### AI Features
 
 - Complete integration with free and open-source Hugging Face models
-- License compatibility verification to ensure compliance with Noesis License
+- License compatibility verification to ensure compliance with Sentium License
 - Support for multiple high-quality open-source AI models
 - Enhanced text generation and natural language understanding
 - Real-time AI-powered perception enhancement
@@ -155,7 +155,7 @@ Noesis v2.2.3 includes comprehensive AI integration with free models from Huggin
 
 ```bash
 # Install AI dependencies
-noesis
+sentium
 > ai install
 
 # Set up a model
@@ -175,7 +175,7 @@ noesis
 
 - Requires Python 3.7+ for AI functionality (with special support for Python 3.13)
 - Optional dependencies: transformers, torch, and huggingface_hub Python packages
-- All AI models are compatible with the Noesis License
+- All AI models are compatible with the Sentium License
 - Backward compatible with v2.1.x configuration files
 
 ### Coming in Future Releases

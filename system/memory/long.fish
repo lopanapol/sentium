@@ -1,10 +1,10 @@
 #!/usr/bin/env fish
 #
-# Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)
-# Licensed under Noesis License - See LICENSE file for details
+# Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+# Licensed under Sentium License - See LICENSE file for details
 #
 
-# noesis_lib.fish - Common utility functions for Noesis
+# sentium_lib.fish - Common utility functions for Sentium
 
 # Define constants
 set -g TRUE 1
@@ -96,7 +96,7 @@ function generate_id
     set length $argv[2]
     
     if test -z "$prefix"
-        set prefix "noesis"
+        set prefix "sentium"
     end
     
     if test -z "$length"

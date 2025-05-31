@@ -1,16 +1,16 @@
 #!/usr/bin/env fish
 #
-# Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)
-# Licensed under Noesis License - See LICENSE file for details
+# Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+# Licensed under Sentium License - See LICENSE file for details
 #
 
-# filepath: /Users/plugio/Documents/GitHub/noesis/system/control/limbric/unit.fish
-# unit.fish - Limbic system implementation for Noesis
+# filepath: /Users/plugio/Documents/GitHub/sentium/system/control/limbric/unit.fish
+# unit.fish - Limbic system implementation for Sentium
 # Simulates the human limbic system's role in emotional processing, memory formation,
 # and behavioral regulation. Integrates with memory and emotion subsystems.
 
-# Current version of Noesis
-set -g NOESIS_VERSION "2.2.2"
+# Current version of Sentium
+set -g SENTIUM_VERSION "2.2.2"
 
 # Define global variables for the limbic system
 set -g LIMBIC_AROUSAL 0.5      # Baseline arousal level (0-1)

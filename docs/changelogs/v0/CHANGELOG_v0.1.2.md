@@ -1,13 +1,13 @@
-# Noesis v0.1.2
+# Sentium v0.1.2
 
 ## Overview
-This version fixes a critical bug in the `noesis_read` function that was causing infinite loops and error messages.
+This version fixes a critical bug in the `sentium_read` function that was causing infinite loops and error messages.
 
 ## Bug Fixes
-- Fixed an infinite loop in the `_noesis_read` assembly function in `io.s`
+- Fixed an infinite loop in the `_sentium_read` assembly function in `io.s`
 - Fixed error handling in I/O operations
 - Added proper buffer validation in the reader function
-- Fixed return value handling for the `noesis_read` function
+- Fixed return value handling for the `sentium_read` function
 - Implemented actual input reading from stdin rather than using hardcoded values
 
 ## Improvements

@@ -1,10 +1,10 @@
 #!/usr/bin/env fish
 #
-# Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)
-# Licensed under Noesis License - See LICENSE file for details
+# Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+# Licensed under Sentium License - See LICENSE file for details
 #
 
-# Script to install AI dependencies for Noesis system
+# Script to install AI dependencies for Sentium system
 # Handles different platforms, particularly macOS issues with PyTorch
 
 set GREEN (set_color green)
@@ -55,8 +55,8 @@ function install_ai_dependencies
         log_message "1. Install Python 3.9 or 3.10 (recommended for PyTorch compatibility)" "INFO"
         log_message "2. Use conda to create an environment with a compatible Python version:" "INFO"
         log_message "   brew install miniforge" "INFO"
-        log_message "   conda create -n noesis python=3.9" "INFO" 
-        log_message "   conda activate noesis" "INFO"
+        log_message "   conda create -n sentium python=3.9" "INFO" 
+        log_message "   conda activate sentium" "INFO"
         log_message "   conda install pytorch torchvision torchaudio -c pytorch" "INFO"
         log_message "   conda install pip && pip install transformers accelerate huggingface_hub" "INFO"
         log_message "Would you like to continue anyway? (y/N)" "INFO"
@@ -132,8 +132,8 @@ function install_ai_dependencies
     else
         log_message "Failed to install PyTorch. Consider using conda instead:" "ERROR"
         log_message "  1. Install miniforge: brew install miniforge" "INFO"
-        log_message "  2. Create environment: conda create -n noesis python=3.9" "INFO"
-        log_message "  3. Activate: conda activate noesis" "INFO"
+        log_message "  2. Create environment: conda create -n sentium python=3.9" "INFO"
+        log_message "  3. Activate: conda activate sentium" "INFO"
         log_message "  4. Install PyTorch: conda install pytorch torchvision torchaudio -c pytorch" "INFO"
         log_message "  5. Install HF: conda install pip && pip install transformers accelerate huggingface_hub" "INFO"
         
@@ -142,7 +142,7 @@ function install_ai_dependencies
         log_message "Creating conda setup script at $conda_script_path" "INFO"
         
         echo '#!/usr/bin/env fish
-# Setup script for Noesis AI dependencies using conda
+# Setup script for Sentium AI dependencies using conda
 # Run this script after installing miniforge/miniconda/anaconda
 
 if not command -sq conda
@@ -152,20 +152,20 @@ if not command -sq conda
 end
 
 # Create the environment
-echo "Creating conda environment for Noesis..."
-conda create -y -n noesis python=3.9
+echo "Creating conda environment for Sentium..."
+conda create -y -n sentium python=3.9
 
 # Instructions for activating
 echo
 echo "======================= IMPORTANT ======================="
 echo "To activate the environment, run:"
-echo "conda activate noesis"
+echo "conda activate sentium"
 echo
 echo "After activating, run this to install dependencies:"
 echo "conda install -y pytorch torchvision torchaudio -c pytorch"
 echo "conda install -y pip && pip install transformers accelerate huggingface_hub"
 echo
-echo "Then restart Noesis to use the AI features"
+echo "Then restart Sentium to use the AI features"
 echo "========================================================"
 
 # Ask if user wants to activate now
@@ -174,14 +174,14 @@ read -P "Activate the environment now? (y/N) " activate
 if test "$activate" = "y" -o "$activate" = "Y"
     # Need to do this in a subshell since conda activate normally requires source
     echo "Running:"
-    echo "conda activate noesis && conda install -y pytorch torchvision torchaudio -c pytorch && pip install transformers accelerate huggingface_hub"
+    echo "conda activate sentium && conda install -y pytorch torchvision torchaudio -c pytorch && pip install transformers accelerate huggingface_hub"
     
-    conda activate noesis
+    conda activate sentium
     if test $status -eq 0
         conda install -y pytorch torchvision torchaudio -c pytorch
         pip install transformers accelerate huggingface_hub
         echo
-        echo "Installation complete! Restart Noesis to use AI features."
+        echo "Installation complete! Restart Sentium to use AI features."
     else
         echo "Error activating conda environment."
         echo "Please run the commands manually as shown above."

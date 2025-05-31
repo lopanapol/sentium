@@ -1,17 +1,17 @@
 #!/bin/bash
 #
-# Emergency Recover Script for Noesis Pixel System
+# Emergency Recover Script for Sentium Pixel System
 # This script fixes common issues with the pixel scripts
 #
 
-INSTALL_DIR="/opt/noesis"
+INSTALL_DIR="/opt/sentium"
 
 # Check if a custom install directory was provided
 if [ ! -z "$1" ]; then
   INSTALL_DIR="$1"
 fi
 
-echo "Noesis Pixel System - Emergency Recovery Tool"
+echo "Sentium Pixel System - Emergency Recovery Tool"
 echo "============================================="
 echo "Target installation: $INSTALL_DIR"
 echo
@@ -21,7 +21,7 @@ echo "Creating new pixel script..."
 cat > ${INSTALL_DIR}/pixel << 'EOF'
 #!/usr/bin/env fish
 
-# Pixel System for Noesis - Emergency recovery version
+# Pixel System for Sentium - Emergency recovery version
 set base_dir (dirname (status -f))
 
 if test "$argv[1]" = "--debug"

@@ -1,10 +1,10 @@
-# Noesis v2.1.2 Changelog
+# Sentium v2.1.2 Changelog
 
 **Release Date:** May 16, 2025
 
 ## Overview
 
-This version includes significant enhancements to the Noesis platform, including AI integration and advanced consciousness modeling based on the latest research.
+This version includes significant enhancements to the Sentium platform, including AI integration and advanced consciousness modeling based on the latest research.
 
 ## Changes
 

@@ -1,10 +1,10 @@
-# Noesis v2.2.2 Changelog
+# Sentium v2.2.2 Changelog
 
 ## Release Date
 May 18, 2025
 
 ## Overview
-This minor update improves user experience for the Noesis interface and fixes several issues related to debug information display and help menu behavior.
+This minor update improves user experience for the Sentium interface and fixes several issues related to debug information display and help menu behavior.
 
 ## Key Changes
 

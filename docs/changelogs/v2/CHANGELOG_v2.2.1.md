@@ -1,10 +1,10 @@
-# Noesis v2.2.1 Changelog
+# Sentium v2.2.1 Changelog
 
 **Release Date:** May 17, 2025
 
 ## Overview
 
-This version includes important bug fixes, performance improvements, and enhanced Python 3.13 compatibility for the AI system introduced in Noesis v2.2.0.
+This version includes important bug fixes, performance improvements, and enhanced Python 3.13 compatibility for the AI system introduced in Sentium v2.2.0.
 
 ## Changes
 
@@ -35,7 +35,7 @@ This version includes important bug fixes, performance improvements, and enhance
 - The v2.2.1 release maintains full compatibility with v2.2.0
 - Optimized for Python 3.13 while maintaining compatibility with Python 3.7+
 - Docker images continue to support both ARM64 and AMD64 architectures
-- All AI models remain compatible with the Noesis License
+- All AI models remain compatible with the Sentium License
 
 ## Additional Notes
 

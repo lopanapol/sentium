@@ -1,10 +1,10 @@
-# Noesis v2.1.1 Changelog
+# Sentium v2.1.1 Changelog
 
 **Release Date:** May 15, 2025
 
 ## Overview
 
-This version includes minor updates and improvements to the Noesis platform.
+This version includes minor updates and improvements to the Sentium platform.
 
 ## Changes
 

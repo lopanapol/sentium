@@ -1,4 +1,4 @@
-# Noesis v2.2.3 Changelog
+# Sentium v2.2.3 Changelog
 
 **Release Date:** May 18, 2025
 

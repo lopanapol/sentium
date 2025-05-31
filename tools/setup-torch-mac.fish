@@ -1,10 +1,10 @@
 #!/usr/bin/env fish
 #
-# Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)
-# Licensed under Noesis License - See LICENSE file for details
+# Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+# Licensed under Sentium License - See LICENSE file for details
 #
 
-# Script to install AI dependencies for Noesis system on macOS
+# Script to install AI dependencies for Sentium system on macOS
 
 set GREEN (set_color green)
 set BLUE (set_color blue)
@@ -21,8 +21,8 @@ else
     echo "$YELLOW"No conda environment detected. Using system Python."$NC"
     echo "For best results, we recommend using conda:"
     echo "  1. Install with: brew install miniconda"
-    echo "  2. Create env: conda create -n noesis python=3.9"
-    echo "  3. Activate: conda activate noesis"
+    echo "  2. Create env: conda create -n sentium python=3.9"
+    echo "  3. Activate: conda activate sentium"
     echo
     echo "Continue with system Python? (y/N)"
     read -l continue
@@ -38,7 +38,7 @@ python3 tools/setup-torch-mac.py
 
 if test $status -eq 0
     echo "$GREEN"PyTorch installation successful!"$NC"
-    echo "You can now use AI features in Noesis."
+    echo "You can now use AI features in Sentium."
 else
     echo "$RED"PyTorch installation failed."$NC"
     echo "Please try the manual installation process:"

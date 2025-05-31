@@ -1,4 +1,4 @@
-# Noesis v2.0.0 Changelog
+# Sentium v2.0.0 Changelog
 
 **Release Date:** May 14, 2025
 
@@ -35,8 +35,8 @@
 ## Compatibility Notes
 
 - The v2.0.0 release is not backward compatible with pre-v1.0 implementations
-- External systems using the Noesis API may need minor adjustments
+- External systems using the Sentium API may need minor adjustments
 
 ## Additional Notes
 
-This release marks a major milestone in the Noesis project with the complete transition to Fish shell as the primary implementation language, streamlining the codebase, and providing enhanced performance for quantum simulations.
+This release marks a major milestone in the Sentium project with the complete transition to Fish shell as the primary implementation language, streamlining the codebase, and providing enhanced performance for quantum simulations.

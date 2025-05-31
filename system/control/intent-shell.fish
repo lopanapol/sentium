@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 #
-# Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)
-# Licensed under Noesis License - See LICENSE file for details
+# Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+# Licensed under Sentium License - See LICENSE file for details
 #
 
 # intent_shell.fish - Shell command processor for intent system
@@ -57,7 +57,7 @@ end
 # Initialize the intent shell system
 function init_intent_shell
     echo "$BLUE╔════════════════════════════════════════════════════════════╗$NC"
-    echo "$BLUE║               $YELLOW NOESIS INTENT SHELL INITIALIZED $BLUE              ║$NC"
+    echo "$BLUE║               $YELLOW SENTIUM INTENT SHELL INITIALIZED $BLUE              ║$NC"
     echo "$BLUE╚════════════════════════════════════════════════════════════╝$NC"
     echo
     return 0
@@ -136,7 +136,7 @@ function handle_ai_command
     
     if test (count $command) -eq 0; or test "$command" = "ai"; or test "$command" = ""
         echo "$BLUE╔════════════════════════════════════════════════════════════╗$NC"
-        echo "$BLUE║               $YELLOW NOESIS AI COMMAND INTERFACE $BLUE               ║$NC"
+        echo "$BLUE║               $YELLOW SENTIUM AI COMMAND INTERFACE $BLUE               ║$NC"
         echo "$BLUE╚════════════════════════════════════════════════════════════╝$NC"
         echo
         echo "$GREEN"AI system commands:"$NC"
@@ -177,7 +177,7 @@ function handle_ai_command
                 end
             else
                 echo "Error: Could not find tools/fast-ai-install-py13.fish"
-                echo "Please download it from the Noesis repository."
+                echo "Please download it from the Sentium repository."
                 return 1
             end
         case "list-models"

@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 #
-# Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)
-# Licensed under Noesis License - See LICENSE file for details
+# Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+# Licensed under Sentium License - See LICENSE file for details
 #
 
 # terminal-status.fish - Script to diagnose and fix terminal hang issues
@@ -14,7 +14,7 @@ set NC (set_color normal)
 
 echo
 echo "$BLUE╔════════════════════════════════════════════════╗$NC"
-echo "$BLUE║     NOESIS TERMINAL STATUS DIAGNOSTICS         ║$NC"
+echo "$BLUE║     SENTIUM TERMINAL STATUS DIAGNOSTICS         ║$NC"
 echo "$BLUE╚════════════════════════════════════════════════╝$NC"
 echo
 
@@ -34,10 +34,10 @@ if command -sq python3
         echo "$RED"WARNING: Python 3.13+ detected - may have compatibility issues with PyTorch"$NC"
         echo "Consider using the Python 3.13+ specific AI tools:"
         echo "  ./tools/fast-ai-install-py13.fish"
-        echo "  or 'ai install-py13' within the Noesis interface"
+        echo "  or 'ai install-py13' within the Sentium interface"
     end
 else
-    echo "$RED"WARNING: Python 3 not found. This may cause issues with Noesis AI features."$NC"
+    echo "$RED"WARNING: Python 3 not found. This may cause issues with Sentium AI features."$NC"
 fi
 
 # Check for running Python processes
@@ -93,15 +93,15 @@ echo
 echo "$BLUE"Recent terminal commands:"$NC"
 history | tail -10
 
-# Check if we have any Noesis specific stuck processes
+# Check if we have any Sentium specific stuck processes
 echo
-echo "$BLUE"Checking for Noesis-specific processes..."$NC"
-set noesis_procs (ps aux | grep -E "noesis|quantum" | grep -v grep)
-if test -n "$noesis_procs"
-    echo "$YELLOW"Found Noesis processes:"$NC"
-    ps aux | grep -E "noesis|quantum" | grep -v grep
+echo "$BLUE"Checking for Sentium-specific processes..."$NC"
+set sentium_procs (ps aux | grep -E "sentium|quantum" | grep -v grep)
+if test -n "$sentium_procs"
+    echo "$YELLOW"Found Sentium processes:"$NC"
+    ps aux | grep -E "sentium|quantum" | grep -v grep
 else
-    echo "$GREEN"No specific Noesis processes detected."$NC"
+    echo "$GREEN"No specific Sentium processes detected."$NC"
 end
 
 # Provide recommendations

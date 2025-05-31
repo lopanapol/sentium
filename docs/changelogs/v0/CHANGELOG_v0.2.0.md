@@ -1,16 +1,16 @@
-# Noesis v0.2.0
+# Sentium v0.2.0
 
 ## Release Date
 May 12, 2025
 
 ## Overview
-This major update restructures the Noesis project into two separate components with different licenses: Noesis Core and Noesis Extensions. This change aims to provide more flexibility for integrations while maintaining the core principles of the project.
+This major update restructures the Sentium project into two separate components with different licenses: Sentium Core and Sentium Extensions. This change aims to provide more flexibility for integrations while maintaining the core principles of the project.
 
 ## Key Changes
 
 ### Project Structure
-- **Split Repository**: The project is now split into noesis-core and noesis-extensions
-- **Licensing**: Core uses the original Noesis License, Extensions use MIT License
+- **Split Repository**: The project is now split into sentium-core and sentium-extensions
+- **Licensing**: Core uses the original Sentium License, Extensions use MIT License
 - **Build System**: Updated Makefiles for each component and linking between them
 - **Installation**: New installation and migration scripts
 

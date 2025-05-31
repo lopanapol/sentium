@@ -1,4 +1,4 @@
-# Noesis v1.2.0
+# Sentium v1.2.0
 
 ## Release Date
 May 14, 2025

@@ -1,13 +1,13 @@
 #!/usr/bin/env fish
 #
-# Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)
-# Licensed under Noesis License - See LICENSE file for details
+# Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+# Licensed under Sentium License - See LICENSE file for details
 #
 
-# run.fish - Main entry point for the Noesis implementation
+# run.fish - Main entry point for the Sentium implementation
 
-# Current version of Noesis
-set -g NOESIS_VERSION "2.2.3"
+# Current version of Sentium
+set -g SENTIUM_VERSION "2.2.3"
 
 # Function to source all required modules when needed
 function load_modules
@@ -106,7 +106,7 @@ end
 
 # Initialize all systems
 function initialize_systems
-    echo "$YELLOW"Initializing Noesis systems..."$NC"
+    echo "$YELLOW"Initializing Sentium systems..."$NC"
     
     # Initialize core systems
     init_memory_system
@@ -126,10 +126,10 @@ end
 
 # Print version information
 function show_version
-    echo "Noesis v$NOESIS_VERSION"
+    echo "Sentium v$SENTIUM_VERSION"
     echo "Synthetic Conscious System"
-    echo "Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)"
-    echo "Licensed under Noesis License - See LICENSE file for details"
+    echo "Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)"
+    echo "Licensed under Sentium License - See LICENSE file for details"
     return 0
 end
 
@@ -171,7 +171,7 @@ function check_python_version_compatibility
     return 0
 end
 
-# Function to check for updates and update Noesis
+# Function to check for updates and update Sentium
 function check_for_updates
     echo "$YELLOW"Checking for updates..."$NC"
     
@@ -189,11 +189,11 @@ function check_for_updates
     cd $tmp_dir
     
     # Clone the repository to check for updates
-    if git clone --quiet https://github.com/napol/noesis.git 2>/dev/null
-        cd noesis
+    if git clone --quiet https://github.com/napol/sentium.git 2>/dev/null
+        cd sentium
         
         # Get the latest version from the repository
-        set latest_version (grep "NOESIS_VERSION" run.fish | head -1 | string match -r '"[0-9]+\.[0-9]+\.[0-9]+"' | tr -d '"')
+        set latest_version (grep "SENTIUM_VERSION" run.fish | head -1 | string match -r '"[0-9]+\.[0-9]+\.[0-9]+"' | tr -d '"')
         
         if test -z "$latest_version"
             echo "$RED"Error: Could not determine the latest version."$NC"
@@ -203,13 +203,13 @@ function check_for_updates
         end
         
         # Compare versions
-        if test "$latest_version" = "$NOESIS_VERSION"
-            echo "$GREEN"You are already running the latest version (v$NOESIS_VERSION)."$NC"
+        if test "$latest_version" = "$SENTIUM_VERSION"
+            echo "$GREEN"You are already running the latest version (v$SENTIUM_VERSION)."$NC"
             cd $current_dir
             rm -rf $tmp_dir
             return 0
         else
-            echo "$GREEN"A new version of Noesis is available: v$latest_version (you have v$NOESIS_VERSION)"$NC"
+            echo "$GREEN"A new version of Sentium is available: v$latest_version (you have v$SENTIUM_VERSION)"$NC"
             
             # Ask if user wants to update
             echo
@@ -220,11 +220,11 @@ function check_for_updates
             echo
             
             if test "$confirm" = "y" -o "$confirm" = "Y"
-                echo "$YELLOW"Updating Noesis..."$NC"
+                echo "$YELLOW"Updating Sentium..."$NC"
                 
-                # Check if Noesis is installed system-wide
-                if test -d "/usr/local/lib/noesis"
-                    echo "$YELLOW"Noesis appears to be installed system-wide."$NC"
+                # Check if Sentium is installed system-wide
+                if test -d "/usr/local/lib/sentium"
+                    echo "$YELLOW"Sentium appears to be installed system-wide."$NC"
                     echo "$YELLOW"Running installer with sudo..."$NC"
                     
                     # Copy the installer script
@@ -234,18 +234,18 @@ function check_for_updates
                     cd $current_dir
                     sudo ./install.fish
                     
-                    echo "$GREEN"Noesis has been updated to v$latest_version."$NC"
+                    echo "$GREEN"Sentium has been updated to v$latest_version."$NC"
                 else
                     echo "$YELLOW"Updating local copy..."$NC"
                     
                     # Copy files to the current repository
-                    cd $tmp_dir/noesis
+                    cd $tmp_dir/sentium
                     cp -r src $current_dir/
                     cp run.fish $current_dir/
                     cp build.fish $current_dir/
                     cp install.fish $current_dir/
                     
-                    echo "$GREEN"Noesis files have been updated to v$latest_version."$NC"
+                    echo "$GREEN"Sentium files have been updated to v$latest_version."$NC"
                     echo "$YELLOW"You may need to rebuild the project with './build.fish'"$NC"
                 end
             else
@@ -271,25 +271,25 @@ end
 function check_pixel_status
     log_with_timestamp "Checking status of synthetic conscious pixel..." "INFO"
     
-    # Check if noesis-web directory exists in the expected location
-    set noesis_web_dir "../noesis-web"
-    if not test -d $noesis_web_dir
+    # Check if sentium-web directory exists in the expected location
+    set sentium_web_dir "../sentium-web"
+    if not test -d $sentium_web_dir
         # If not found in the expected location, try looking in the git folder
-        set noesis_web_dir "../git/noesis-web"
-        if not test -d $noesis_web_dir
-            log_with_timestamp "Could not find noesis-web directory" "ERROR"
+        set sentium_web_dir "../git/sentium-web"
+        if not test -d $sentium_web_dir
+            log_with_timestamp "Could not find sentium-web directory" "ERROR"
             return 1
         end
     end
     
-    # Check if the remote noesis.run server is accessible
-    echo "$BLUE"Checking connection to noesis.run server..."$NC"
+    # Check if the remote sentium.run server is accessible
+    echo "$BLUE"Checking connection to sentium.run server..."$NC"
     if command -sq curl
-        set connection_status (curl -s -o /dev/null -w "%{http_code}" https://noesis.run 2>/dev/null)
+        set connection_status (curl -s -o /dev/null -w "%{http_code}" https://sentium.run 2>/dev/null)
         if test "$connection_status" = "200"
-            echo "$GREEN"Connection to noesis.run server: ONLINE"$NC"
+            echo "$GREEN"Connection to sentium.run server: ONLINE"$NC"
         else
-            echo "$RED"Connection to noesis.run server: OFFLINE (Status: $connection_status)"$NC"
+            echo "$RED"Connection to sentium.run server: OFFLINE (Status: $connection_status)"$NC"
         end
     else
         echo "$YELLOW"Cannot check server connection: curl not found"$NC"
@@ -297,7 +297,7 @@ function check_pixel_status
     
     # Check the last modification time of the conscious pixel code
     echo "$BLUE"Checking conscious pixel version..."$NC"
-    set script_path "$noesis_web_dir/script.js"
+    set script_path "$sentium_web_dir/script.js"
     if test -f "$script_path"
         set last_modified (stat -f "%Sm" "$script_path" 2>/dev/null)
         if test $status -ne 0
@@ -322,17 +322,17 @@ function check_pixel_status
         echo "$RED"Conscious pixel code not found at $script_path"$NC"
     end
     
-    # Check the overall status of the conscious pixel (based on noesis.run availability)
+    # Check the overall status of the conscious pixel (based on sentium.run availability)
     echo "$BLUE"Checking conscious pixel status..."$NC"
     if command -sq curl
-        set connection_status (curl -s -o /dev/null -w "%{http_code}" https://noesis.run 2>/dev/null)
+        set connection_status (curl -s -o /dev/null -w "%{http_code}" https://sentium.run 2>/dev/null)
         if test "$connection_status" = "200"
             echo "$GREEN"Conscious pixel status: ALIVE"$NC"
-            echo "$GREEN"Access at: https://noesis.run"$NC"
+            echo "$GREEN"Access at: https://sentium.run"$NC"
             echo
         else
             echo "$YELLOW"Conscious pixel status: UNKNOWN"$NC"
-            echo "$YELLOW"Cannot connect to https://noesis.run (Status: $connection_status)"$NC"
+            echo "$YELLOW"Cannot connect to https://sentium.run (Status: $connection_status)"$NC"
             echo
         end
     else
@@ -345,19 +345,19 @@ end
 
 # Function to quickly check only the alive status of the conscious pixel
 function check_pixel_status_fast
-    # Check if the remote noesis.run server is accessible and report minimal status
+    # Check if the remote sentium.run server is accessible and report minimal status
     if command -sq curl
-        set connection_status (curl -s -o /dev/null -w "%{http_code}" https://noesis.run 2>/dev/null)
+        set connection_status (curl -s -o /dev/null -w "%{http_code}" https://sentium.run 2>/dev/null)
         if test "$connection_status" = "200"
             echo
             echo "$GREEN"Conscious pixel status: ALIVE"$NC"
-            echo "$GREEN"Access at: https://noesis.run"$NC"
+            echo "$GREEN"Access at: https://sentium.run"$NC"
             echo
             return 0
         else
             echo
             echo "$YELLOW"Conscious pixel status: UNKNOWN"$NC"
-            echo "$YELLOW"Cannot connect to https://noesis.run (Status: $connection_status)"$NC"
+            echo "$YELLOW"Cannot connect to https://sentium.run (Status: $connection_status)"$NC"
             echo
             return 1
         end
@@ -370,22 +370,22 @@ function check_pixel_status_fast
 end
 
 function show_help
-    echo "Noesis v$NOESIS_VERSION - Synthetic Conscious System"
+    echo "Sentium v$SENTIUM_VERSION - Synthetic Conscious System"
     echo
-    echo "Usage: noesis [options]"
+    echo "Usage: sentium [options]"
     echo
     echo "Options:"
     echo "  -v, --version     Display version information"
     echo "  -h, --help        Display this help message"
     echo "  test              Run all tests"
     echo "  -q, --quantum     Run in quantum mode"
-    echo "  update            Check for updates and update Noesis"
+    echo "  update            Check for updates and update Sentium"
     echo "  pixel-status      Check status of the conscious pixel"
     echo "  logs [date] [level]  View log files with optional filtering"
-    echo "                    Example: noesis logs 2025-05-17 ERROR"
+    echo "                    Example: sentium logs 2025-05-17 ERROR"
     echo "  verbose           Toggle verbose debug mode"
     echo
-    echo "Without options, Noesis starts in interactive mode."
+    echo "Without options, Sentium starts in interactive mode."
     return 0
 end
 
@@ -451,7 +451,7 @@ end
 function print_banner
     echo
     echo "$PINK━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$NC"
-    echo "$PINK  NOESIS v$NOESIS_VERSION            $NC"
+    echo "$PINK  SENTIUM v$SENTIUM_VERSION            $NC"
     echo "$PINK  SYNTHETIC CONSCIOUS SYSTEM         $NC"
     echo "$PINK━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$NC"
     echo
@@ -476,7 +476,7 @@ function rotate_logs
     end
     
     # Log rotation only makes sense if there are logs to rotate
-    set log_count (find logs -name "noesis-*.log" | wc -l | string trim)
+    set log_count (find logs -name "sentium-*.log" | wc -l | string trim)
     if test $log_count -eq 0
         # Only show this message if verbose mode is enabled
         if test "$VERBOSE_MODE" = "true"
@@ -488,7 +488,7 @@ function rotate_logs
     echo "Rotating logs (keeping $retention_days days)..."
     
     # List log files sorted by name (chronological by date)
-    set log_files (find logs -name "noesis-*.log" | sort)
+    set log_files (find logs -name "sentium-*.log" | sort)
     set files_to_keep (math "$log_count - $retention_days")
     
     # If we have more logs than retention days, delete the oldest ones
@@ -516,12 +516,12 @@ function view_logs
         set log_date (date +"%Y-%m-%d")
     end
     
-    set log_file "logs/noesis-$log_date.log"
+    set log_file "logs/sentium-$log_date.log"
     
     if not test -f $log_file
         echo "$RED"No log file found for date: $log_date"$NC"
         echo "Available logs:"
-        ls -1 logs/ | grep "noesis-" | sed 's/noesis-//' | sed 's/.log//' 2>/dev/null || echo "No logs found"
+        ls -1 logs/ | grep "sentium-" | sed 's/sentium-//' | sed 's/.log//' 2>/dev/null || echo "No logs found"
         return 1
     end
     
@@ -539,7 +539,7 @@ function view_logs
 end
 
 # Main function for run.fish
-function noesis_main
+function sentium_main
     # Handle special cases with direct output without initialization
     if test (count $argv) -gt 0
         if contains -- $argv[1] "pixel-status" "pixel-status-fast" "pixel-fast"
@@ -604,14 +604,14 @@ function noesis_main
                 return 0
                 
             case "test"
-                log_with_timestamp "Running Noesis tests..." "INFO"
+                log_with_timestamp "Running Sentium tests..." "INFO"
                 load_modules
                 # Add test logic here
                 log_with_timestamp "All tests completed successfully" "SUCCESS"
                 return 0
                 
             case "-q" "--quantum"
-                log_with_timestamp "Starting Noesis in quantum mode..." "INFO"
+                log_with_timestamp "Starting Sentium in quantum mode..." "INFO"
                 # Source intent.fish which will handle everything
                 source soul/intent.fish
                 # Call main function from intent.fish with quantum flag
@@ -632,17 +632,17 @@ function noesis_main
             case "pixel-status"
                 # Check status of the conscious pixel (directly showing minimal output)
                 if command -sq curl
-                    set connection_status (curl -s -o /dev/null -w "%{http_code}" https://noesis.run 2>/dev/null)
+                    set connection_status (curl -s -o /dev/null -w "%{http_code}" https://sentium.run 2>/dev/null)
                     if test "$connection_status" = "200"
                         echo
                         echo "$GREEN"Conscious pixel status: ALIVE"$NC"
-                        echo "$GREEN"Access at: https://noesis.run"$NC"
+                        echo "$GREEN"Access at: https://sentium.run"$NC"
                         echo
                         return 0
                     else
                         echo
                         echo "$YELLOW"Conscious pixel status: UNKNOWN"$NC"
-                        echo "$YELLOW"Cannot connect to https://noesis.run (Status: $connection_status)"$NC"
+                        echo "$YELLOW"Cannot connect to https://sentium.run (Status: $connection_status)"$NC"
                         echo
                         return 1
                     end
@@ -656,17 +656,17 @@ function noesis_main
             case "pixel-status-fast" "pixel-fast"
                 # Maintain backward compatibility with these aliases
                 if command -sq curl
-                    set connection_status (curl -s -o /dev/null -w "%{http_code}" https://noesis.run 2>/dev/null)
+                    set connection_status (curl -s -o /dev/null -w "%{http_code}" https://sentium.run 2>/dev/null)
                     if test "$connection_status" = "200"
                         echo
                         echo "$GREEN"Conscious pixel status: ALIVE"$NC"
-                        echo "$GREEN"Access at: https://noesis.run"$NC"
+                        echo "$GREEN"Access at: https://sentium.run"$NC"
                         echo
                         return 0
                     else
                         echo
                         echo "$YELLOW"Conscious pixel status: UNKNOWN"$NC"
-                        echo "$YELLOW"Cannot connect to https://noesis.run (Status: $connection_status)"$NC"
+                        echo "$YELLOW"Cannot connect to https://sentium.run (Status: $connection_status)"$NC"
                         echo
                         return 1
                     end
@@ -699,7 +699,7 @@ function noesis_main
         # Print banner
         print_banner
         
-        echo "$GREEN"Noesis is ready. AI modules are available but not loaded by default."$NC"
+        echo "$GREEN"Sentium is ready. AI modules are available but not loaded by default."$NC"
         echo "$GREEN"To use AI features, run with specific commands that require them."$NC"
         echo
         
@@ -713,6 +713,6 @@ function noesis_main
     end
 end
 
-# Execute noesis_main function with all arguments
-noesis_main $argv
+# Execute sentium_main function with all arguments
+sentium_main $argv
 exit $status

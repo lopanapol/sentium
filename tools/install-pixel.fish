@@ -1,13 +1,13 @@
 #!/usr/bin/env fish
 #
-# Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)
-# Licensed under Noesis License - See LICENSE file for details
+# Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+# Licensed under Sentium License - See LICENSE file for details
 #
 
 # install-pixel.fish - Install the conscious pixel scripts to the system
 
 # Default installation directory
-set install_dir "/opt/noesis"
+set install_dir "/opt/sentium"
 
 # Parse arguments
 if test (count $argv) -gt 0
@@ -20,7 +20,7 @@ set base_dir (dirname $script_dir)
 
 # Check if the script is running from the correct directory
 if not test -f $base_dir/system/pixel/pixel-consciousness.js
-    echo "Error: This script must be run from the Noesis repository"
+    echo "Error: This script must be run from the Sentium repository"
     exit 1
 end
 

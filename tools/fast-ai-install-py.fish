@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 #
-# Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)
-# Licensed under Noesis License - See LICENSE file for details
+# Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+# Licensed under Sentium License - See LICENSE file for details
 #
 
 # fast-ai-install-py13.fish - Special AI dependency installation for Python 3.13+
@@ -16,7 +16,7 @@ set NC (set_color normal)
 
 echo "$CYAN"
 echo "╔════════════════════════════════════════════════════╗"
-echo "║     NOESIS PYTHON 3.13+ AI DEPENDENCIES SETUP      ║"
+echo "║     SENTIUM PYTHON 3.13+ AI DEPENDENCIES SETUP      ║"
 echo "╚════════════════════════════════════════════════════╝"
 echo "$NC"
 
@@ -28,8 +28,8 @@ set py_version (python3 -c "import sys; print(f'{sys.version_info.major}.{sys.ve
 echo "$BLUE""System: $os_type ($arch), Python: $py_version""$NC"
 echo
 
-# Create .noesis directory if it doesn't exist
-mkdir -p ~/.noesis
+# Create .sentium directory if it doesn't exist
+mkdir -p ~/.sentium
 
 # Run the specialized Python 3.13+ installation script
 echo "$YELLOW""Running specialized Python 3.13+ AI installation...""$NC"
@@ -46,7 +46,7 @@ else
     echo "$YELLOW""PyTorch installation not detected. Using compatibility layer...""$NC"
     
     # Create minimal compatibility module if not exists from the Python script
-    if not test -f ~/.noesis/torch_compat.py
+    if not test -f ~/.sentium/torch_compat.py
         echo "$YELLOW""Creating minimal PyTorch compatibility layer...""$NC"
         echo '# PyTorch compatibility layer
 import sys
@@ -119,7 +119,7 @@ class FakeBackends:
 
 # Create and export the compatibility module
 sys.modules["torch"] = FakeTorch()
-warnings.warn("Using PyTorch compatibility layer. Limited functionality available.")' > ~/.noesis/torch_compat.py
+warnings.warn("Using PyTorch compatibility layer. Limited functionality available.")' > ~/.sentium/torch_compat.py
     end
 end
 
@@ -128,7 +128,7 @@ echo 'import sys
 import os
 
 # Add the compatibility layer to Python path
-sys.path.insert(0, os.path.expanduser("~/.noesis"))
+sys.path.insert(0, os.path.expanduser("~/.sentium"))
 
 # Try importing proper torch first (in case it was installed)
 try:
@@ -137,7 +137,7 @@ try:
 except ImportError:
     # Fall back to compatibility layer
     import torch_compat
-    print("Using PyTorch compatibility layer")' > ~/.noesis/use_torch_compat.py
+    print("Using PyTorch compatibility layer")' > ~/.sentium/use_torch_compat.py
 
 # Install numpy if missing (needed for the compatibility layer)
 echo "$YELLOW""Installing numpy (required for compatibility)...""$NC"
@@ -147,7 +147,7 @@ python3 -m pip install numpy --user --break-system-packages
 echo "$YELLOW""Testing compatibility layer...""$NC"
 python3 -c "
 import sys, os
-sys.path.insert(0, os.path.expanduser('~/.noesis'))
+sys.path.insert(0, os.path.expanduser('~/.sentium'))
 import torch_compat
 fake_torch = sys.modules['torch']
 # Test basic tensor creation
@@ -237,7 +237,7 @@ else
     echo "$YELLOW""Creating transformers compatibility layer...""$NC"
     
     # Create a minimal transformers compatibility module
-    mkdir -p ~/.noesis/transformers
+    mkdir -p ~/.sentium/transformers
     echo '
 import sys
 import warnings
@@ -260,10 +260,10 @@ class TransformersModule:
 
 # Register as module
 sys.modules["transformers"] = TransformersModule()
-warnings.warn("Using transformers compatibility stub. Most functionality unavailable.")' > ~/.noesis/transformers/__init__.py
+warnings.warn("Using transformers compatibility stub. Most functionality unavailable.")' > ~/.sentium/transformers/__init__.py
     
     # Test the transformers compatibility module
-    if python3 -c "import sys; sys.path.insert(0, '$(echo ~/.noesis)'); import transformers; print(f\"Transformers compatibility layer loaded: {transformers.__version__}\")" 2>/dev/null
+    if python3 -c "import sys; sys.path.insert(0, '$(echo ~/.sentium)'); import transformers; print(f\"Transformers compatibility layer loaded: {transformers.__version__}\")" 2>/dev/null
         echo "$YELLOW""Created minimal transformers compatibility layer for basic API compatibility.""$NC"
         set can_import_transformers 1
         set ai_installed 1
@@ -277,7 +277,7 @@ echo
 # Check if torch_compat can be imported (skip if we already have PyTorch)
 if not python3 -c "import torch" 2>/dev/null
     set can_import_torch_compat 0
-    python3 -c "import sys; import os; sys.path.insert(0, os.path.expanduser('~/.noesis')); import torch_compat" 2>/dev/null; and set can_import_torch_compat 1
+    python3 -c "import sys; import os; sys.path.insert(0, os.path.expanduser('~/.sentium')); import torch_compat" 2>/dev/null; and set can_import_torch_compat 1
     if test $can_import_torch_compat -eq 1
         set ai_installed 1
     end
@@ -337,7 +337,7 @@ if test $ai_installed -eq 1
     end
     
     echo
-    echo "$GREEN""You can now use the AI features in Noesis (with some limitations).""$NC"
+    echo "$GREEN""You can now use the AI features in Sentium (with some limitations).""$NC"
     echo "$YELLOW""Advanced features like neural network inference may be limited.""$NC"
     echo
     exit 0
@@ -350,8 +350,8 @@ else
     echo "$YELLOW""Recommendations:""$NC"
     echo "1. Install an older Python version compatible with PyTorch (3.9 or 3.10)"
     echo "2. Use conda environment: brew install miniforge"
-    echo "3. Create compatible env: conda create -n noesis python=3.10"
-    echo "4. Activate env: conda activate noesis"
+    echo "3. Create compatible env: conda create -n sentium python=3.10"
+    echo "4. Activate env: conda activate sentium"
     echo "5. Install PyTorch: conda install pytorch torchvision torchaudio -c pytorch"
     echo "6. Install HF: conda install pip && pip install transformers accelerate huggingface_hub"
     
@@ -362,13 +362,13 @@ else
     python3 -m pip install numpy --user --break-system-packages
     
     # Create compatibility layer if it doesn't exist
-    if not test -f ~/.noesis/torch_compat.py
+    if not test -f ~/.sentium/torch_compat.py
         echo "$YELLOW""Creating emergency compatibility layer...""$NC"
         # This code is already in the script above, so it will be created
     end
     
     # Test if we can at least use the compatibility layer
-    if python3 -c "import sys; import os; sys.path.insert(0, os.path.expanduser('~/.noesis')); import torch_compat; print('Emergency compatibility mode enabled')" 2>/dev/null
+    if python3 -c "import sys; import os; sys.path.insert(0, os.path.expanduser('~/.sentium')); import torch_compat; print('Emergency compatibility mode enabled')" 2>/dev/null
         echo "$YELLOW""Emergency compatibility mode enabled. Very limited functionality available.""$NC"
         echo "$YELLOW""Note: Most advanced AI features will not work properly.""$NC"
         exit 2

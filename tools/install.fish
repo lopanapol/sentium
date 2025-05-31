@@ -1,13 +1,13 @@
 #!/usr/bin/env fish
 #
-# Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)
-# Licensed under Noesis License - See LICENSE file for details
+# Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+# Licensed under Sentium License - See LICENSE file for details
 #
 
-# install.fish - Installation script for Noesis
+# install.fish - Installation script for Sentium
 
-# Current version of Noesis
-set -g NOESIS_VERSION "2.2.2"
+# Current version of Sentium
+set -g SENTIUM_VERSION "2.2.2"
 
 # Define colors for better readability
 set GREEN (set_color green)
@@ -18,7 +18,7 @@ set PINK (set_color ff5fd7) # Bright pink
 set NC (set_color normal)
 
 echo "$PINK━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$NC"
-echo "$PINK  NOESIS v$NOESIS_VERSION - SYSTEM INSTALLER     $NC"
+echo "$PINK  SENTIUM v$SENTIUM_VERSION - SYSTEM INSTALLER     $NC"
 echo "$PINK━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$NC"
 echo
 
@@ -63,9 +63,9 @@ end
 echo "$GREEN"All required files exist"$NC"
 
 # Define installation paths
-set INSTALL_DIR "/usr/local/lib/noesis"
+set INSTALL_DIR "/usr/local/lib/sentium"
 set BIN_DIR "/usr/local/bin"
-set EXECUTABLE "$BIN_DIR/noesis"
+set EXECUTABLE "$BIN_DIR/sentium"
 
 # Make sure the target directories exist
 echo "$YELLOW""Creating installation directories...""$NC"
@@ -73,7 +73,7 @@ mkdir -p $INSTALL_DIR
 mkdir -p $BIN_DIR
 
 # Copy necessary files to installation directory
-echo "$YELLOW""Copying Noesis files...""$NC"
+echo "$YELLOW""Copying Sentium files...""$NC"
 
 # Copy core files
 cp LICENSE $INSTALL_DIR/
@@ -93,23 +93,23 @@ for file in $required_files
     cp "$file" "$INSTALL_DIR/$file"
 end
 
-# Create the noesis executable script
+# Create the sentium executable script
 echo "$YELLOW""Creating executable...""$NC"
 echo '#!/usr/bin/env fish
 #
-# Noesis CLI Runner
+# Sentium CLI Runner
 #
-# Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)
-# Licensed under Noesis License - See LICENSE file for details
+# Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+# Licensed under Sentium License - See LICENSE file for details
 #
 
-# Define the directory where Noesis is installed
-set NOESIS_DIR "/usr/local/lib/noesis"
+# Define the directory where Sentium is installed
+set SENTIUM_DIR "/usr/local/lib/sentium"
 
-# Change to the Noesis directory
-cd $NOESIS_DIR
+# Change to the Sentium directory
+cd $SENTIUM_DIR
 
-# Execute Noesis with all passed arguments
+# Execute Sentium with all passed arguments
 exec ./run.fish $argv
 
 ' > $EXECUTABLE
@@ -118,6 +118,6 @@ exec ./run.fish $argv
 chmod +x $EXECUTABLE
 
 echo "$GREEN""Installation complete!""$NC"
-echo "You can now run Noesis from anywhere using the ""$YELLOW""noesis""$NC"" command."
-echo "Try ""$YELLOW""noesis -v""$NC"" to verify the installation."
+echo "You can now run Sentium from anywhere using the ""$YELLOW""sentium""$NC"" command."
+echo "Try ""$YELLOW""sentium -v""$NC"" to verify the installation."
 echo

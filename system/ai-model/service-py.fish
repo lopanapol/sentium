@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 #
-# Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)
-# Licensed under Noesis License - See LICENSE file for details
+# Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+# Licensed under Sentium License - See LICENSE file for details
 #
 
 # ai-model-service-py13.fish - Service wrapper for AI models in Python 3.13+
@@ -16,8 +16,8 @@ set -l PINK (set_color ff5fd7)
 set -l NC (set_color normal)
 
 # Create directories if needed
-mkdir -p ~/.noesis/ai_models
-mkdir -p ~/.noesis/temp
+mkdir -p ~/.sentium/ai_models
+mkdir -p ~/.sentium/temp
 
 # Function to check Python environment
 function check_python_env
@@ -39,8 +39,8 @@ function check_pytorch
         return 0
     else
         # Try using the compatibility layer
-        if test -f ~/.noesis/torch_compat.py
-            if python3 -c "import sys; sys.path.insert(0, '$HOME/.noesis'); import torch_compat; print('PyTorch compatibility layer works')" 2>/dev/null
+        if test -f ~/.sentium/torch_compat.py
+            if python3 -c "import sys; sys.path.insert(0, '$HOME/.sentium'); import torch_compat; print('PyTorch compatibility layer works')" 2>/dev/null
                 return 0
             end
         end
@@ -54,9 +54,9 @@ function run_ai_task
     set -l input $argv[2]
     
     # Create a temporary Python script
-    cat > ~/.noesis/temp/ai_task.py <<EOL
+    cat > ~/.sentium/temp/ai_task.py <<EOL
 import sys
-sys.path.insert(0, '$HOME/.noesis')
+sys.path.insert(0, '$HOME/.sentium')
 
 # Try importing torch - fall back to compatibility layer if needed
 try:
@@ -99,13 +99,13 @@ print(result)
 EOL
 
     # Run the Python script
-    python3 ~/.noesis/temp/ai_task.py
+    python3 ~/.sentium/temp/ai_task.py
     return $status
 end
 
 # Main function
 function main
-    echo "$PINK""NOESIS AI Service Wrapper for Python 3.13+""$NC"
+    echo "$PINK""SENTIUM AI Service Wrapper for Python 3.13+""$NC"
     echo
     
     # Check the environment

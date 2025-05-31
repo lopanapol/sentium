@@ -1,4 +1,4 @@
-// Server component for Noesis Web - consolidated API & Web server
+// Server component for Sentium Web - consolidated API & Web server
 const express = require('express');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
@@ -18,14 +18,14 @@ try {
   console.log('⚠️ Custom paths.js not found, using default paths');
   // Fallback to default paths if the config file doesn't exist
   pathsConfig = {
-    NOESIS_PRIMARY_PATH: '/opt/noesis',
-    NOESIS_FALLBACK_PATH: '/opt/noesis'
+    SENTIUM_PRIMARY_PATH: '/opt/sentium',
+    SENTIUM_FALLBACK_PATH: '/opt/sentium'
   };
 }
 
-// Get Noesis paths from environment variables or config file
-const NOESIS_PRIMARY_PATH = process.env.NOESIS_PATH || pathsConfig.NOESIS_PRIMARY_PATH;
-const NOESIS_FALLBACK_PATH = process.env.NOESIS_FALLBACK_PATH || pathsConfig.NOESIS_FALLBACK_PATH;
+// Get Sentium paths from environment variables or config file
+const SENTIUM_PRIMARY_PATH = process.env.SENTIUM_PATH || pathsConfig.SENTIUM_PRIMARY_PATH;
+const SENTIUM_FALLBACK_PATH = process.env.SENTIUM_FALLBACK_PATH || pathsConfig.SENTIUM_FALLBACK_PATH;
 
 // Initialize Express app
 const app = express();
@@ -80,15 +80,15 @@ function executeHttpie(args) {
   });
 }
 
-// Get Noesis version
+// Get Sentium version
 function getVersion() {
   try {
     // Check both possible paths for VERSION file
-    if (fs.existsSync(`${NOESIS_PRIMARY_PATH}/VERSION`)) {
-      return fs.readFileSync(`${NOESIS_PRIMARY_PATH}/VERSION`, 'utf8').trim();
+    if (fs.existsSync(`${SENTIUM_PRIMARY_PATH}/VERSION`)) {
+      return fs.readFileSync(`${SENTIUM_PRIMARY_PATH}/VERSION`, 'utf8').trim();
     }
-    if (fs.existsSync(`${NOESIS_FALLBACK_PATH}/VERSION`)) {
-      return fs.readFileSync(`${NOESIS_FALLBACK_PATH}/VERSION`, 'utf8').trim();
+    if (fs.existsSync(`${SENTIUM_FALLBACK_PATH}/VERSION`)) {
+      return fs.readFileSync(`${SENTIUM_FALLBACK_PATH}/VERSION`, 'utf8').trim();
     }
     return '1.0';
   } catch (error) {
@@ -97,20 +97,20 @@ function getVersion() {
   }
 }
 
-// Check connection to Noesis system
-function checkNoesisSystem() {
+// Check connection to Sentium system
+function checkSentiumSystem() {
   return new Promise(async (resolve) => {
     try {
-      // Define the possible paths where Noesis might be installed
+      // Define the possible paths where Sentium might be installed
       const possiblePaths = [
-        NOESIS_PRIMARY_PATH,
-        NOESIS_FALLBACK_PATH
+        SENTIUM_PRIMARY_PATH,
+        SENTIUM_FALLBACK_PATH
       ];
       
       // Try direct file access to VERSION file in each path
       for (const basePath of possiblePaths) {
         if (fs.existsSync(`${basePath}/VERSION`)) {
-          console.log(`Successfully connected to Noesis system via file system at ${basePath}`);
+          console.log(`Successfully connected to Sentium system via file system at ${basePath}`);
           resolve(true);
           return;
         }
@@ -118,7 +118,7 @@ function checkNoesisSystem() {
 
       // Try a basic file system check with ls on each path
       for (const basePath of possiblePaths) {
-        console.log(`Performing file system check for Noesis system at ${basePath}...`);
+        console.log(`Performing file system check for Sentium system at ${basePath}...`);
         try {
           const ls = spawn('ls', ['-la', basePath]);
           let lsOutput = '';
@@ -130,7 +130,7 @@ function checkNoesisSystem() {
           await new Promise((resolveLS) => {
             ls.on('close', (lsCode) => {
               if (lsCode === 0) {
-                console.log(`Successfully connected to Noesis system via ls command at ${basePath}`);
+                console.log(`Successfully connected to Sentium system via ls command at ${basePath}`);
                 resolveLS(true);
               } else {
                 resolveLS(false);
@@ -147,10 +147,10 @@ function checkNoesisSystem() {
       }
       
       // If we get here, all checks failed
-      console.error('Error connecting to Noesis system: All checks failed');
+      console.error('Error connecting to Sentium system: All checks failed');
       resolve(false);
     } catch (error) {
-      console.error('Error connecting to Noesis system:', error.message);
+      console.error('Error connecting to Sentium system:', error.message);
       resolve(false);
     }
   });
@@ -174,17 +174,17 @@ async function initializePixelState() {
   }
 }
 
-// Handle Noesis system actions directly
-async function handleNoesisAction(action, data) {
+// Handle Sentium system actions directly
+async function handleSentiumAction(action, data) {
   try {
-    console.log(`Handling Noesis action directly: ${action}`);
+    console.log(`Handling Sentium action directly: ${action}`);
     
     // Determine the right base path
-    let basePath = NOESIS_PRIMARY_PATH;
+    let basePath = SENTIUM_PRIMARY_PATH;
     
     // Check if new path exists, otherwise fall back to the old path
     if (!fs.existsSync(basePath)) {
-      basePath = NOESIS_FALLBACK_PATH;
+      basePath = SENTIUM_FALLBACK_PATH;
     }
     
     if (action === 'VERSION') {
@@ -204,7 +204,7 @@ async function handleNoesisAction(action, data) {
       return { error: 'Invalid action' };
     }
   } catch (error) {
-    console.error('Error handling Noesis action:', error.message);
+    console.error('Error handling Sentium action:', error.message);
     return null;
   }
 }
@@ -224,7 +224,7 @@ app.get('/api/', (req, res) => {
     status: 'ok',
     version: getVersion(),
     timestamp: new Date().toISOString(),
-    endpoints: ['/api/status', '/api/noesis']
+    endpoints: ['/api/status', '/api/sentium']
   });
 });
 
@@ -250,9 +250,9 @@ app.post('/api', apiLimiter, (req, res) => {
     const sanitizedKey = sanitizeFilename(key || '');
     
     // Determine the best available path
-    let storePath = NOESIS_PRIMARY_PATH;
+    let storePath = SENTIUM_PRIMARY_PATH;
     if (!fs.existsSync(storePath)) {
-      storePath = NOESIS_FALLBACK_PATH;
+      storePath = SENTIUM_FALLBACK_PATH;
     }
     
     // Store data in a simple way
@@ -266,41 +266,41 @@ app.post('/api', apiLimiter, (req, res) => {
   }
 });
 
-// API endpoint to check Noesis connection
-app.post('/api/noesis', apiLimiter, async (req, res) => {
+// API endpoint to check Sentium connection
+app.post('/api/sentium', apiLimiter, async (req, res) => {
   try {
     const { action } = req.body;
     
     if (action === 'getVersion') {
-      // Check if Noesis system is available
-      const noesisConnected = await checkNoesisSystem();
+      // Check if Sentium system is available
+      const sentiumConnected = await checkSentiumSystem();
       
       let version = '1.0';
       
-      // If connected, try to get actual version from Noesis system
-      if (noesisConnected) {
+      // If connected, try to get actual version from Sentium system
+      if (sentiumConnected) {
         try {
-          const noesisResponse = await handleNoesisAction('VERSION');
-          if (noesisResponse && noesisResponse.version) {
-            version = noesisResponse.version;
+          const sentiumResponse = await handleSentiumAction('VERSION');
+          if (sentiumResponse && sentiumResponse.version) {
+            version = sentiumResponse.version;
           }
         } catch (error) {
-          console.warn('Could not get version from Noesis system:', error.message);
+          console.warn('Could not get version from Sentium system:', error.message);
         }
       }
       
       // Update connection status in Redis
-      await redis.hset('pixel:state', 'connected', String(noesisConnected));
+      await redis.hset('pixel:state', 'connected', String(sentiumConnected));
       await redis.hset('pixel:state', 'lastConnected', new Date().toISOString());
       
       // Get consciousness model information if connected
       let consciousnessModel = 'None';
       let consciousnessLevel = 0;
       
-      if (noesisConnected) {
+      if (sentiumConnected) {
         try {
-          consciousnessModel = await pixelConsciousness.getCurrentConsciousnessModel(NOESIS_PRIMARY_PATH);
-          consciousnessLevel = await pixelConsciousness.getConsciousnessLevel(NOESIS_PRIMARY_PATH);
+          consciousnessModel = await pixelConsciousness.getCurrentConsciousnessModel(SENTIUM_PRIMARY_PATH);
+          consciousnessLevel = await pixelConsciousness.getConsciousnessLevel(SENTIUM_PRIMARY_PATH);
         } catch (error) {
           console.warn('Could not get consciousness information:', error.message);
         }
@@ -308,7 +308,7 @@ app.post('/api/noesis', apiLimiter, async (req, res) => {
       
       res.json({
         version,
-        connected: noesisConnected,
+        connected: sentiumConnected,
         consciousnessModel,
         consciousnessLevel,
         timestamp: new Date().toISOString()
@@ -320,8 +320,8 @@ app.post('/api/noesis', apiLimiter, async (req, res) => {
       // Add consciousness information
       if (state && state.connected === 'true') {
         try {
-          state.consciousnessModel = await pixelConsciousness.getCurrentConsciousnessModel(NOESIS_PRIMARY_PATH);
-          state.consciousnessLevel = await pixelConsciousness.getConsciousnessLevel(NOESIS_PRIMARY_PATH);
+          state.consciousnessModel = await pixelConsciousness.getCurrentConsciousnessModel(SENTIUM_PRIMARY_PATH);
+          state.consciousnessLevel = await pixelConsciousness.getConsciousnessLevel(SENTIUM_PRIMARY_PATH);
           state.consciousnessModelDescription = pixelConsciousness.CONSCIOUSNESS_MODELS[state.consciousnessModel] || 'Unknown';
         } catch (error) {
           console.warn('Could not add consciousness information to state:', error.message);
@@ -335,17 +335,17 @@ app.post('/api/noesis', apiLimiter, async (req, res) => {
       if (state) {
         await redis.hmset('pixel:state', state);
         
-        // Also forward the state to the Noesis system if connected
-        const noesisConnected = await redis.hget('pixel:state', 'connected');
-        if (noesisConnected === 'true') {
+        // Also forward the state to the Sentium system if connected
+        const sentiumConnected = await redis.hget('pixel:state', 'connected');
+        if (sentiumConnected === 'true') {
           try {
             // Store pixel state directly
-            await handleNoesisAction('STORE', { 
+            await handleSentiumAction('STORE', { 
               key: 'pixel:state', 
               value: state 
             });
           } catch (error) {
-            console.warn('Failed to store state to Noesis:', error.message);
+            console.warn('Failed to store state to Sentium:', error.message);
           }
         }
         
@@ -365,17 +365,17 @@ app.post('/api/noesis', apiLimiter, async (req, res) => {
 // Start the consolidated server
 const PORT = process.env.PORT || 3002;
 app.listen(PORT, async () => {
-  console.log(`Noesis consolidated server running on port ${PORT}`);
+  console.log(`Sentium consolidated server running on port ${PORT}`);
   await initializePixelState();
   
-  console.log('Checking Noesis system connection...');
-  const connected = await checkNoesisSystem();
+  console.log('Checking Sentium system connection...');
+  const connected = await checkSentiumSystem();
   
-  // Initialize pixel consciousness if connected to Noesis
+  // Initialize pixel consciousness if connected to Sentium
   if (connected) {
     console.log('Initializing conscious pixel integration...');
     const consciousnessInitialized = await pixelConsciousness.initializePixelConsciousness(
-      NOESIS_PRIMARY_PATH,
+      SENTIUM_PRIMARY_PATH,
       redis
     );
     
@@ -387,18 +387,18 @@ app.listen(PORT, async () => {
   }
   
   if (connected) {
-    console.log('✅ Successfully connected to Noesis system at /opt/noesis');
+    console.log('✅ Successfully connected to Sentium system at /opt/sentium');
     console.log(`✅ Version: ${getVersion()}`);
   } else {
-    console.log('\n❌ ERROR: Could not connect to Noesis system at /opt/noesis');
-    console.log('\nThe Noesis web interface requires the Noesis system to be installed.');
+    console.log('\n❌ ERROR: Could not connect to Sentium system at /opt/sentium');
+    console.log('\nThe Sentium web interface requires the Sentium system to be installed.');
     console.log('Please make sure that:');
-    console.log('  1. The Noesis repository is installed at /opt/noesis');
+    console.log('  1. The Sentium repository is installed at /opt/sentium');
     console.log('  2. Proper permissions are set for the directory');
-    console.log('\nTo install Noesis:');
+    console.log('\nTo install Sentium:');
     console.log('  sudo mkdir -p /opt');
     console.log('  cd /opt');
-    console.log('  sudo git clone https://github.com/void-sign/noesis.git\n');
-    console.log('The web interface will run in disconnected mode until Noesis is installed.');
+    console.log('  sudo git clone https://github.com/void-sign/sentium.git\n');
+    console.log('The web interface will run in disconnected mode until Sentium is installed.');
   }
 });

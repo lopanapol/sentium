@@ -1,10 +1,10 @@
 #!/usr/bin/env fish
 #
-# Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)
-# Licensed under Noesis License - See LICENSE file for details
+# Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+# Licensed under Sentium License - See LICENSE file for details
 #
 
-# fast-ai-install.fish - Quick AI dependency installation for Noesis
+# fast-ai-install.fish - Quick AI dependency installation for Sentium
 # This script uses pre-compiled wheels for faster installation
 
 set GREEN (set_color green)
@@ -16,7 +16,7 @@ set NC (set_color normal)
 
 echo "$CYAN"
 echo "╔════════════════════════════════════════════════════╗"
-echo "║       NOESIS FAST AI DEPENDENCIES INSTALLER        ║"
+echo "║       SENTIUM FAST AI DEPENDENCIES INSTALLER        ║"
 echo "╚════════════════════════════════════════════════════╝"
 echo "$NC"
 
@@ -310,7 +310,7 @@ if test (count $argv) -eq 0 || not contains -- "--no-timeout" $argv
         echo
         echo "$GREEN""════════════════════════════════════════════════════════════════════""$NC"
         echo "$GREEN""✓ Fast AI dependency installation completed successfully!""$NC" 
-        echo "$GREEN""✓ You can now use the AI features in Noesis.""$NC"
+        echo "$GREEN""✓ You can now use the AI features in Sentium.""$NC"
         echo "$GREEN""════════════════════════════════════════════════════════════════════""$NC"
         
         # Report which AI capabilities are available
@@ -361,8 +361,8 @@ if test (count $argv) -eq 0 || not contains -- "--no-timeout" $argv
         else
             echo "1. Install miniconda/miniforge and try again with conda:"
             echo "   brew install miniforge"
-            echo "   conda create -n noesis python=3.9"
-            echo "   conda activate noesis"
+            echo "   conda create -n sentium python=3.9"
+            echo "   conda activate sentium"
             echo "   ./fast-ai-install.fish"
         end
         

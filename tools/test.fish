@@ -1,13 +1,13 @@
 #!/usr/bin/env fish
 #
-# Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)
-# Licensed under Noesis License - See LICENSE file for details
+# Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+# Licensed under Sentium License - See LICENSE file for details
 #
 
-# test.fish - Test script for Noesis
+# test.fish - Test script for Sentium
 
-# Current version of Noesis
-set -g NOESIS_VERSION "2.2.2"
+# Current version of Sentium
+set -g SENTIUM_VERSION "2.2.2"
 
 # Define colors for better readability
 set GREEN (set_color green)
@@ -18,7 +18,7 @@ set PINK (set_color ff5fd7) # Bright pink
 set NC (set_color normal)
 
 echo "$PINK━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$NC"
-echo "$PINK  NOESIS v$NOESIS_VERSION - TEST SUITE           $NC"
+echo "$PINK  SENTIUM v$SENTIUM_VERSION - TEST SUITE           $NC"
 echo "$PINK━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$NC"
 echo
 
