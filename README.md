@@ -41,12 +41,6 @@ Sentium includes several methods to install AI dependencies, depending on your n
 5. **In-app Installation**:
    Run Sentium and use the command `ai install` within the interface.
 
-## Terminal Preview
-
-![Sentium Terminal](sentium-cli.png)
-
-![Conscious Menu](conscious-menu.jpg)
-
 ### Directory Structure
 ```
 sentium/
