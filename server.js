@@ -450,13 +450,13 @@ app.listen(PORT, async () => {
   }
   
   if (connected) {
-    console.log('✅ Successfully connected to Sentium system at /opt/sentium');
+    console.log(`✅ Successfully connected to Sentium system at ${SENTIUM_PRIMARY_PATH}`);
     console.log(`✅ Version: ${getVersion()}`);
   } else {
-    console.log('\n❌ ERROR: Could not connect to Sentium system at /opt/sentium');
+    console.log(`\n❌ ERROR: Could not connect to Sentium system at ${SENTIUM_PRIMARY_PATH}`);
     console.log('\nThe Sentium web interface requires the Sentium system to be installed.');
     console.log('Please make sure that:');
-    console.log('  1. The Sentium repository is installed at /opt/sentium');
+    console.log(`  1. The Sentium repository is installed at ${SENTIUM_PRIMARY_PATH}`);
     console.log('  2. Proper permissions are set for the directory');
     console.log('\nTo install Sentium:');
     console.log('  sudo mkdir -p /opt');
