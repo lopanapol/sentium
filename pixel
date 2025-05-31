@@ -1,0 +1,35 @@
+#!/usr/bin/env fish
+#
+# Copyright (c) 2025 Napol Thanarangkaun (napol@noesis.run)
+# Licensed under Noesis License - See LICENSE file for details
+#
+
+# Simple alias script to make the pixel control command easier to use
+
+# Get the directory where this script is located - using realpath for absolute path
+set script_dir (dirname (status -f))
+set full_path (readlink -f $script_dir 2>/dev/null; or realpath $script_dir 2>/dev/null; or echo $script_dir)
+
+# Display debug information if there's an issue
+if test "$argv[1]" = "--debug"
+    echo "Script location: $script_dir"
+    echo "Full path: $full_path"
+    echo "Current directory: "(pwd)
+    set -e argv[1]
+end
+
+# Check if the control script exists
+if not test -f "$full_path/tools/pixel-control.fish"
+    echo "Error: Could not find pixel control script at $full_path/tools/pixel-control.fish"
+    echo "Current directory: "(pwd)
+    echo "Try running with --debug for more information"
+    exit 1
+end
+
+# Make sure it's executable
+if not test -x "$full_path/tools/pixel-control.fish"
+    chmod +x "$full_path/tools/pixel-control.fish"
+end
+
+# Pass all arguments to the pixel-control.fish script using absolute path
+$full_path/tools/pixel-control.fish $argv
