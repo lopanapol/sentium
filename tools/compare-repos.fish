@@ -2,7 +2,7 @@
 
 # Script to compare local git repo with remote server
 # Created: May 17, 2025
-# Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+# Copyright (c) 2025 Napol Thanarangkaun (lopanapol@gmail.com)
 # Licensed under Sentium License - See LICENSE file for details
 
 # Define colors for better readability (copied from run.fish)

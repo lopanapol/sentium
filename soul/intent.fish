@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 #
-# Copyright (c) 2025 Napol Thanarangkaun (napol@sentium.run)
+# Copyright (c) 2025 Napol Thanarangkaun (lopanapol@gmail.com)
 # Licensed under Sentium License - See LICENSE file for details
 #
 

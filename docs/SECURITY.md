@@ -24,7 +24,7 @@
 
 We take security vulnerabilities seriously. If you discover a security issue, please follow these steps:
 
-1. Email us at [napol@sentium.run](mailto:napol@sentium.run) with subject line "Security Vulnerability Report"
+1. Email us at [lopanapol@gmail.com](mailto:lopanapol@gmail.com) with subject line "Security Vulnerability Report"
 2. Include detailed information about the vulnerability
 3. If possible, provide steps to reproduce the issue
 4. Avoid disclosing the vulnerability publicly until we've had a chance to address it
