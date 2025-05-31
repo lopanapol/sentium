@@ -33,22 +33,39 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname)));
 
-// Redis client is optional - will use if available
+// CORS middleware for GitHub Pages integration
+app.use((req, res, next) => {
+  const allowCrossOrigin = pathsConfig.ALLOW_CROSS_ORIGIN || false;
+  const allowedOrigins = pathsConfig.ALLOWED_ORIGINS || [];
+  
+  if (allowCrossOrigin && req.headers.origin) {
+    // Check if the origin is in our allowed list
+    if (allowedOrigins.includes(req.headers.origin)) {
+      res.header('Access-Control-Allow-Origin', req.headers.origin);
+      res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+      res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+      res.header('Access-Control-Allow-Credentials', 'true');
+    }
+  }
+  
+  // Handle preflight OPTIONS request
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  
+  next();
+});
+
+// Redis client is optional - we'll use file-based storage for local development
 let redis;
-try {
-  const Redis = require('ioredis');
-  redis = new Redis();
-  console.log('✅ Redis client initialized');
-} catch (error) {
-  console.log('⚠️ Redis not available, will use file-based storage');
-  redis = {
-    exists: async () => false,
-    hmset: async () => true,
-    hgetall: async () => ({}),
-    hset: async () => true,
-    hget: async () => null
-  };
-}
+console.log('⚠️ Using file-based storage for local development');
+redis = {
+  exists: async () => false,
+  hmset: async () => true,
+  hgetall: async () => ({}),
+  hset: async () => true,
+  hget: async () => null
+};
 
 // Execute an HTTPie command and return the result
 function executeHttpie(args) {
@@ -267,6 +284,52 @@ app.post('/api', apiLimiter, (req, res) => {
 });
 
 // API endpoint to check Sentium connection
+// API endpoint for Pixel data sync with GitHub Pages
+app.post('/api/pixel', apiLimiter, async (req, res) => {
+  try {
+    const { action, pixelState } = req.body;
+    
+    console.log(`Pixel API request: ${action}`, pixelState ? 'with state data' : 'without state data');
+    
+    if (action === 'connect') {
+      // Return connection success with server info
+      res.json({
+        success: true,
+        version: getVersion(),
+        message: 'Connected to local Sentium server',
+        serverTime: Date.now(),
+        serverType: 'local'
+      });
+    } else if (action === 'saveState' && pixelState) {
+      // Save pixel state to Redis or fallback
+      const key = 'pixel:state';
+      try {
+        if (redis) {
+          await redis.hmset(key, pixelState);
+          console.log('Pixel state saved to Redis:', pixelState);
+        } else {
+          // Fallback to file storage
+          fs.writeFileSync(
+            path.join(SENTIUM_PRIMARY_PATH, 'pixel-state.json'), 
+            JSON.stringify(pixelState), 
+            'utf8'
+          );
+          console.log('Pixel state saved to file:', pixelState);
+        }
+        res.json({ success: true, message: 'Pixel state saved' });
+      } catch (error) {
+        console.error('Error saving pixel state:', error);
+        res.status(500).json({ error: 'Failed to save pixel state' });
+      }
+    } else {
+      res.status(400).json({ error: 'Invalid action for pixel API' });
+    }
+  } catch (error) {
+    console.error('Error in pixel API:', error);
+    res.status(500).json({ error: 'Server error processing pixel request' });
+  }
+});
+
 app.post('/api/sentium', apiLimiter, async (req, res) => {
   try {
     const { action } = req.body;
@@ -363,7 +426,7 @@ app.post('/api/sentium', apiLimiter, async (req, res) => {
 });
 
 // Start the consolidated server
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, async () => {
   console.log(`Sentium consolidated server running on port ${PORT}`);
   await initializePixelState();

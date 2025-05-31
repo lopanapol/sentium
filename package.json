@@ -4,7 +4,8 @@
   "description": "Sentium System API Server",
   "main": "api-server.js",
   "scripts": {
-    "start": "npm-run-all --parallel start:api start:web",
+    "start": "node server.js",
+    "start:all": "npm-run-all --parallel start:api start:web",
     "start:api": "node api-server.js",
     "start:web": "node server.js"
   },
