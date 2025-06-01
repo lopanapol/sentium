@@ -330,6 +330,65 @@ app.post('/api/pixel', apiLimiter, async (req, res) => {
   }
 });
 
+// API endpoint for Pixel data sync with GitHub Pages - GET handler
+app.get('/api/pixel', apiLimiter, async (req, res) => {
+  // Return connection success with server info
+  res.json({
+    success: true,
+    version: getVersion(),
+    message: 'Connected to local Sentium server',
+    serverTime: Date.now(),
+    serverType: 'local',
+    note: 'For full functionality, use POST requests'
+  });
+});
+
+// API endpoint for Pixel data sync with GitHub Pages - POST handler
+app.post('/api/pixel', apiLimiter, async (req, res) => {
+  try {
+    const { action, pixelState } = req.body;
+    
+    console.log(`Pixel API request: ${action}`, pixelState ? 'with state data' : 'without state data');
+    
+    if (action === 'connect') {
+      // Return connection success with server info
+      res.json({
+        success: true,
+        version: getVersion(),
+        message: 'Connected to local Sentium server',
+        serverTime: Date.now(),
+        serverType: 'local'
+      });
+    } else if (action === 'saveState' && pixelState) {
+      // Save pixel state to Redis or fallback
+      const key = 'pixel:state';
+      try {
+        if (redis) {
+          await redis.hmset(key, pixelState);
+          console.log('Pixel state saved to Redis:', pixelState);
+        } else {
+          // Fallback to file storage
+          fs.writeFileSync(
+            path.join(SENTIUM_PRIMARY_PATH, 'pixel-state.json'), 
+            JSON.stringify(pixelState), 
+            'utf8'
+          );
+          console.log('Pixel state saved to file:', pixelState);
+        }
+        res.json({ success: true, message: 'Pixel state saved' });
+      } catch (error) {
+        console.error('Error saving pixel state:', error);
+        res.status(500).json({ error: 'Failed to save pixel state' });
+      }
+    } else {
+      res.status(400).json({ error: 'Invalid action for pixel API' });
+    }
+  } catch (error) {
+    console.error('Error in pixel API:', error);
+    res.status(500).json({ error: 'Server error processing pixel request' });
+  }
+});
+
 app.post('/api/sentium', apiLimiter, async (req, res) => {
   try {
     const { action } = req.body;
