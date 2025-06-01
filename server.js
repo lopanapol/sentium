@@ -38,15 +38,33 @@ app.use((req, res, next) => {
   const allowCrossOrigin = pathsConfig.ALLOW_CROSS_ORIGIN || false;
   const allowedOrigins = pathsConfig.ALLOWED_ORIGINS || [];
   
-  if (allowCrossOrigin && req.headers.origin) {
+  // Check if this is a request to the /api/pixel endpoint
+  const isPixelApiRequest = req.path === '/api/pixel';
+  
+  // Always allow CORS for pixel API requests from GitHub Pages
+  if (isPixelApiRequest && req.headers.origin && req.headers.origin.includes('github.io')) {
+    console.log(`☑️ Allowing GitHub Pages request from: ${req.headers.origin}`);
+    res.header('Access-Control-Allow-Origin', req.headers.origin);
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    res.header('Access-Control-Allow-Credentials', 'true');
+  } 
+  // Standard CORS check for other requests
+  else if (allowCrossOrigin && req.headers.origin) {
     // Check if the origin is in our allowed list
     if (allowedOrigins.includes(req.headers.origin)) {
+      console.log(`☑️ Allowing request from allowed origin: ${req.headers.origin}`);
       res.header('Access-Control-Allow-Origin', req.headers.origin);
       res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
       res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
       res.header('Access-Control-Allow-Credentials', 'true');
+    } else {
+      console.log(`⚠️ Blocked request from unallowed origin: ${req.headers.origin}`);
     }
   }
+  
+  // Log the request for debugging purposes
+  console.log(`${req.method} ${req.path} from ${req.headers.origin || 'unknown origin'}`);
   
   // Handle preflight OPTIONS request
   if (req.method === 'OPTIONS') {
@@ -332,6 +350,13 @@ app.post('/api/pixel', apiLimiter, async (req, res) => {
 
 // API endpoint for Pixel data sync with GitHub Pages - GET handler
 app.get('/api/pixel', apiLimiter, async (req, res) => {
+  // Get origin for debugging
+  const origin = req.headers.origin || 'unknown';
+  const userAgent = req.headers['user-agent'] || 'unknown';
+  
+  console.log(`🟢 GET /api/pixel request received from ${origin}`);
+  console.log(`📱 User Agent: ${userAgent}`);
+  
   // Return connection success with server info
   res.json({
     success: true,
@@ -339,7 +364,37 @@ app.get('/api/pixel', apiLimiter, async (req, res) => {
     message: 'Connected to local Sentium server',
     serverTime: Date.now(),
     serverType: 'local',
-    note: 'For full functionality, use POST requests'
+    note: 'For full functionality, use POST requests',
+    connectionInfo: {
+      clientOrigin: origin,
+      serverAddress: req.socket.localAddress,
+      serverPort: req.socket.localPort,
+      requestedUrl: req.originalUrl,
+      corsEnabled: true,
+      userAgent: userAgent,
+      protocolVersion: req.httpVersion
+    }
+  });
+});
+
+// Connection test endpoint - accepts GET and responds with minimal information
+// This endpoint is specifically designed for GitHub Pages to test connectivity
+app.get('/api/test-connection', async (req, res) => {
+  // No rate limiting on this endpoint to facilitate testing
+  const origin = req.headers.origin || 'unknown';
+  console.log(`🔵 Connection test from ${origin}`);
+  
+  // Always set CORS headers for this endpoint
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  
+  res.json({
+    success: true,
+    message: 'Connection to Sentium server successful',
+    serverType: 'local',
+    serverTime: Date.now(),
+    origin: origin
   });
 });
 
