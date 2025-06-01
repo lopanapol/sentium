@@ -57,6 +57,8 @@ app.use((req, res, next) => {
       res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
       res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
       res.header('Access-Control-Allow-Credentials', 'true');
+      // Add support for Private Network Access - fixes Chrome 130+ compatibility
+      res.header('Access-Control-Allow-Private-Network', 'true');
     } 
     // Standard CORS check for other requests
     else if (allowCrossOrigin) {
@@ -84,6 +86,17 @@ app.use((req, res, next) => {
   
   // Handle preflight OPTIONS request
   if (req.method === 'OPTIONS') {
+    // Ensure all necessary CORS headers are set for preflight requests
+    if (req.headers.origin) {
+      const origin = req.headers.origin;
+      const isGitHubPages = origin.includes('github.io');
+      const isSentiumDev = origin.includes('sentium.dev');
+      
+      if (isApiRequest && (isGitHubPages || isSentiumDev)) {
+        // Make sure private network access header is included in preflight response
+        res.header('Access-Control-Allow-Private-Network', 'true');
+      }
+    }
     return res.sendStatus(200);
   }
   
@@ -404,6 +417,8 @@ app.get('/api/test-connection', async (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  // Add support for Private Network Access - fixes Chrome 130+ compatibility
+  res.header('Access-Control-Allow-Private-Network', 'true');
   
   // Get request details for debugging
   const userAgent = req.headers['user-agent'] || 'unknown';
