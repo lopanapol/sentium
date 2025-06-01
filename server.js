@@ -33,33 +33,49 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname)));
 
-// CORS middleware for GitHub Pages integration
+// CORS middleware for GitHub Pages and sentium.dev integration
 app.use((req, res, next) => {
   const allowCrossOrigin = pathsConfig.ALLOW_CROSS_ORIGIN || false;
   const allowedOrigins = pathsConfig.ALLOWED_ORIGINS || [];
   
-  // Check if this is a request to the /api/pixel endpoint
-  const isPixelApiRequest = req.path === '/api/pixel';
+  // API endpoints that should allow cross-origin requests
+  const apiEndpoints = ['/api/pixel', '/api/test-connection', '/api/status'];
+  const isApiRequest = apiEndpoints.includes(req.path);
   
-  // Always allow CORS for pixel API requests from GitHub Pages
-  if (isPixelApiRequest && req.headers.origin && req.headers.origin.includes('github.io')) {
-    console.log(`☑️ Allowing GitHub Pages request from: ${req.headers.origin}`);
-    res.header('Access-Control-Allow-Origin', req.headers.origin);
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    res.header('Access-Control-Allow-Credentials', 'true');
-  } 
-  // Standard CORS check for other requests
-  else if (allowCrossOrigin && req.headers.origin) {
-    // Check if the origin is in our allowed list
-    if (allowedOrigins.includes(req.headers.origin)) {
-      console.log(`☑️ Allowing request from allowed origin: ${req.headers.origin}`);
-      res.header('Access-Control-Allow-Origin', req.headers.origin);
+  // Special handling for debug mode
+  const isDebugMode = req.query.debug === 'true';
+  
+  // Always allow CORS for API requests from GitHub Pages or sentium.dev
+  if (req.headers.origin) {
+    const origin = req.headers.origin;
+    const isGitHubPages = origin.includes('github.io');
+    const isSentiumDev = origin.includes('sentium.dev');
+    
+    if (isApiRequest && (isGitHubPages || isSentiumDev)) {
+      console.log(`☑️ Allowing ${isGitHubPages ? 'GitHub Pages' : 'sentium.dev'} request from: ${origin}`);
+      res.header('Access-Control-Allow-Origin', origin);
       res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
       res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
       res.header('Access-Control-Allow-Credentials', 'true');
-    } else {
-      console.log(`⚠️ Blocked request from unallowed origin: ${req.headers.origin}`);
+    } 
+    // Standard CORS check for other requests
+    else if (allowCrossOrigin) {
+      // Check if the origin is in our allowed list
+      if (allowedOrigins.includes(origin)) {
+        console.log(`☑️ Allowing request from allowed origin: ${origin}`);
+        res.header('Access-Control-Allow-Origin', origin);
+        res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+        res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+        res.header('Access-Control-Allow-Credentials', 'true');
+      } else if (isDebugMode) {
+        // Allow in debug mode, but warn
+        console.log(`⚠️ Allowing request from non-allowed origin in debug mode: ${origin}`);
+        res.header('Access-Control-Allow-Origin', origin);
+        res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+        res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+      } else {
+        console.log(`⚠️ Blocked request from unallowed origin: ${origin}`);
+      }
     }
   }
   
@@ -384,18 +400,55 @@ app.get('/api/test-connection', async (req, res) => {
   const origin = req.headers.origin || 'unknown';
   console.log(`🔵 Connection test from ${origin}`);
   
-  // Always set CORS headers for this endpoint
+  // Always set CORS headers for this endpoint - use wildcard to guarantee it works
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  
+  // Get request details for debugging
+  const userAgent = req.headers['user-agent'] || 'unknown';
+  const referer = req.headers['referer'] || 'unknown';
+  const acceptHeader = req.headers['accept'] || 'unknown';
+  
+  // Log detailed information about the request
+  console.log(`🔎 Test connection details - Referer: ${referer}, UA: ${userAgent.substring(0, 50)}...`);
   
   res.json({
     success: true,
     message: 'Connection to Sentium server successful',
     serverType: 'local',
+    version: getVersion(),
+    serverTime: Date.now(),
+    origin: origin,
+    requestDetails: {
+      userAgent: userAgent,
+      referer: referer,
+      acceptHeader: acceptHeader,
+      ip: req.ip,
+      path: req.path,
+      hostname: req.hostname
+    }
+  });
+});
+
+// JSONP version of the test endpoint for browsers that block CORS
+app.get('/api/jsonp-test', (req, res) => {
+  const callback = req.query.callback || 'sentiumCallback';
+  const origin = req.headers.origin || 'unknown';
+  console.log(`🔷 JSONP connection test from ${origin}`);
+  
+  const responseData = {
+    success: true,
+    message: 'Connection to Sentium server successful via JSONP',
+    serverType: 'local',
+    version: getVersion(),
     serverTime: Date.now(),
     origin: origin
-  });
+  };
+  
+  // Send as JSONP
+  res.set('Content-Type', 'application/javascript');
+  res.send(`${callback}(${JSON.stringify(responseData)})`);
 });
 
 // API endpoint for Pixel data sync with GitHub Pages - POST handler
