@@ -6,6 +6,8 @@
 
 # unit.fish - AI integration with Hugging Face models for Sentium
 
+source (dirname (status -f))/consciousness.fish
+
 
 
 
@@ -31,14 +33,14 @@ function init_ai_system
     end
     
     # Check for Python and required packages
-    if not command -sq python3
+    if not command -sq $VIRTUAL_ENV_PYTHON
         echo "Error: Python 3 is required for AI integration"
         set -g AI_SYSTEM_ENABLED false
         return 1
     end
     
     # Check if required packages are installed
-    if not python3 -c "import transformers" 2>/dev/null
+    if not $VIRTUAL_ENV_PYTHON -c "import transformers" 2>/dev/null
         echo "Warning: Transformers package not found"
         echo "To enable AI capabilities, run one of the following:"
         echo "  ./tools/fast-ai-install.fish        # For Python 3.9-3.10"
@@ -48,10 +50,21 @@ function init_ai_system
     end
 
     # Check for PyTorch or compatibility layer
-    if not python3 -c "import torch" 2>/dev/null
+    if not $VIRTUAL_ENV_PYTHON -c "import torch" 2>/dev/null
+        echo "Warning: Transformers package not found"
+        echo "To enable AI capabilities, run one of the following:"
+        echo "  ./tools/fast-ai-install.fish        # For Python 3.9-3.10"
+        echo "  ./tools/fast-ai-install-py13.fish   # For Python 3.13+"
+        set -g AI_SYSTEM_ENABLED false
+        return 1
+    end
+    echo "Transformers package check status: $status"
+
+    echo "Checking for PyTorch package..."
+    if not $VIRTUAL_ENV_PYTHON -c "import torch" 2>/dev/null
         # Check for compatibility layer
         if test -f ~/.sentium/torch_compat.py
-            python3 -c "import sys; sys.path.insert(0, '$HOME/.sentium'); import torch_compat" 2>/dev/null
+            $VIRTUAL_ENV_PYTHON -c "import sys; sys.path.insert(0, '$HOME/.sentium'); import torch_compat" 2>/dev/null
             if test $status -eq 0
                 echo "Using PyTorch compatibility layer"
                 set -g AI_SYSTEM_ENABLED true
@@ -142,7 +155,7 @@ function ai_set_model
     # Try to download the model to cache if AI system is enabled
     if test "$AI_SYSTEM_ENABLED" = true
         echo "Downloading model weights (this may take some time)..."
-        python3 -c "from transformers import AutoTokenizer, AutoModelForCausalLM; tokenizer = AutoTokenizer.from_pretrained('$requested_model'); model = AutoModelForCausalLM.from_pretrained('$requested_model', device_map='auto')" &>/dev/null
+        $VIRTUAL_ENV_PYTHON -c "from transformers import AutoTokenizer, AutoModelForCausalLM; tokenizer = AutoTokenizer.from_pretrained('$requested_model'); model = AutoModelForCausalLM.from_pretrained('$requested_model', device_map='auto')" &>/dev/null
         if test $status -eq 0
             echo "Model downloaded successfully"
         else
@@ -234,7 +247,7 @@ if __name__ == "__main__":
 ' > $temp_script
 
     # Execute the script
-    python3 $temp_script "$AI_MODEL_NAME" "$prompt"
+    $VIRTUAL_ENV_PYTHON $temp_script "$AI_MODEL_NAME" "$prompt"
     set result $status
     
     # Clean up
@@ -371,21 +384,21 @@ function ai_status
     # Check Python and package status
     echo
     echo "Dependencies:"
-    if command -sq python3
-        set python_version (python3 --version 2>&1)
+    if command -sq $VIRTUAL_ENV_PYTHON
+        set python_version ($VIRTUAL_ENV_PYTHON --version 2>&1)
         echo "  Python: $python_version"
         
         echo -n "  Transformers: "
-        if python3 -c "import transformers" 2>/dev/null
-            set transformers_version (python3 -c "import transformers; print(transformers.__version__)" 2>/dev/null)
+        if $VIRTUAL_ENV_PYTHON -c "import transformers" 2>/dev/null
+            set transformers_version ($VIRTUAL_ENV_PYTHON -c "import transformers; print(transformers.__version__)" 2>/dev/null)
             echo "installed ($transformers_version)"
         else
             echo "not installed"
         end
         
         echo -n "  PyTorch: "
-        if python3 -c "import torch" 2>/dev/null
-            set torch_version (python3 -c "import torch; print(torch.__version__)" 2>/dev/null)
+        if $VIRTUAL_ENV_PYTHON -c "import torch" 2>/dev/null
+            set torch_version ($VIRTUAL_ENV_PYTHON -c "import torch; print(torch.__version__)" 2>/dev/null)
             echo "installed ($torch_version)"
         else
             echo "not installed"
@@ -420,8 +433,8 @@ function ai_install_dependencies
     echo "Installing AI dependencies..."
     
     # Check Python version to determine which installer to use
-    set py_version (python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')" 2>/dev/null)
-    set py_minor (python3 -c "import sys; print(sys.version_info.minor)" 2>/dev/null)
+    set py_version ($VIRTUAL_ENV_PYTHON -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')" 2>/dev/null)
+    set py_minor ($VIRTUAL_ENV_PYTHON -c "import sys; print(sys.version_info.minor)" 2>/dev/null)
     
     # For Python 3.13+, use the specialized installer
     if test "$py_minor" -ge "13"
@@ -494,14 +507,14 @@ function ai_install_dependencies
     check_macos_conda_recommendation
     
     # Check if Python is installed
-    if not command -sq python3
+    if not command -sq $VIRTUAL_ENV_PYTHON
         echo "Error: Python 3 is required but not installed"
         echo "Please install Python 3 and try again"
         return 1
     end
     
     # Check if pip is installed
-    if not python3 -m pip --version &>/dev/null
+    if not $VIRTUAL_ENV_PYTHON -m pip --version &>/dev/null
         echo "Error: pip is required but not installed"
         echo "Please install pip and try again"
         return 1
@@ -509,8 +522,8 @@ function ai_install_dependencies
     
     # Try a simple installation for any OS
     echo "Installing dependencies with pip..."
-    python3 -m pip install --upgrade pip
-    python3 -m pip install transformers accelerate huggingface_hub
+    $VIRTUAL_ENV_PYTHON -m pip install --upgrade pip
+    $VIRTUAL_ENV_PYTHON -m pip install transformers accelerate huggingface_hub
     
     # Different approach based on OS
     if test (uname) = "Darwin"
@@ -520,15 +533,15 @@ function ai_install_dependencies
             conda install -y pytorch torchvision torchaudio -c pytorch
         else
             # For macOS with pip, try with a version known to work
-            python3 -m pip install --no-cache-dir torch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 --index-url https://download.pytorch.org/whl/cpu
+            $VIRTUAL_ENV_PYTHON -m pip install --no-cache-dir torch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 --index-url https://download.pytorch.org/whl/cpu
         end
     else
         # Generic installation for other platforms
-        python3 -m pip install torch
+        $VIRTUAL_ENV_PYTHON -m pip install torch
     end
     
     # Check if installation succeeded
-    if python3 -c "import torch, transformers" &>/dev/null
+    if $VIRTUAL_ENV_PYTHON -c "import torch, transformers" &>/dev/null
         echo "Dependencies installed successfully"
         set -g AI_SYSTEM_ENABLED true
         return 0
@@ -601,8 +614,8 @@ if __name__ == \"__main__\":
 " > $temp_script
 
     # Execute the script if huggingface_hub is installed
-    if python3 -c "import huggingface_hub" 2>/dev/null
-        python3 $temp_script "$model_name"
+    if $VIRTUAL_ENV_PYTHON -c "import huggingface_hub" 2>/dev/null
+        $VIRTUAL_ENV_PYTHON $temp_script "$model_name"
         set result $status
     else
         echo "Warning: huggingface_hub Python module not installed."

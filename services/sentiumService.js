@@ -100,8 +100,25 @@ async function handleSentiumAction(action, data) {
 
 async function generateChatReply(message) {
   return new Promise((resolve, reject) => {
+    const virtualEnvPython = path.join(SENTIUM_PRIMARY_PATH, 'sentium_venv', 'bin', 'python3');
     const scriptContent = `#!/usr/bin/env fish
+set -x
+set -g SENTIUM_PRIMARY_PATH ${SENTIUM_PRIMARY_PATH}
 source ${SENTIUM_PRIMARY_PATH}/system/ai-model/unit.fish
+
+# Check for Python and required packages
+if not command -sq ${virtualEnvPython}
+    echo "Error: Python 3 is required for AI integration"
+    set -g AI_SYSTEM_ENABLED false
+else if not ${virtualEnvPython} -c "import transformers" 2>/dev/null
+    echo "Warning: Transformers package not found"
+    set -g AI_SYSTEM_ENABLED false
+else if not ${virtualEnvPython} -c "import torch" 2>/dev/null
+    echo "Warning: PyTorch not found"
+    set -g AI_SYSTEM_ENABLED false
+else
+    set -g AI_SYSTEM_ENABLED true
+end
 
 if test "$AI_SYSTEM_ENABLED" != "true"; and not functions -q ai_set_model
     echo "AI system not enabled. Please install AI dependencies."
@@ -116,21 +133,16 @@ conscious_respond "${message}"
 `;
 
     const tempScriptPath = path.join(SENTIUM_PRIMARY_PATH, `temp_script_${Date.now()}.fish`);
+    const logFilePath = path.join(SENTIUM_PRIMARY_PATH, `fish_script_log_${Date.now()}.log`);
     fs.writeFileSync(tempScriptPath, scriptContent, { mode: 0o755 }); // Make it executable
 
     console.log(`Executing fish script from temporary file: ${tempScriptPath}`);
+    console.log(`Logging fish script output to: ${logFilePath}`);
 
-    const child = spawn('/usr/local/bin/fish', [tempScriptPath], { cwd: SENTIUM_PRIMARY_PATH });
-
-    let output = '';
-    let errorOutput = '';
-
-    child.stdout.on('data', (data) => {
-      output += data.toString();
-    });
-
-    child.stderr.on('data', (data) => {
-      errorOutput += data.toString();
+    const child = spawn('/usr/local/bin/fish', [tempScriptPath], {
+      cwd: SENTIUM_PRIMARY_PATH,
+      env: { ...process.env, VIRTUAL_ENV_PYTHON: virtualEnvPython },
+      stdio: ['ignore', fs.openSync(logFilePath, 'w'), fs.openSync(logFilePath, 'w')]
     });
 
     child.on('close', (code) => {
@@ -139,12 +151,20 @@ conscious_respond "${message}"
         if (err) console.error(`Error deleting temporary script file: ${err}`);
       });
 
+      // Read and print the log file content
+      const logContent = fs.readFileSync(logFilePath, 'utf8');
+      console.log(`Fish script log content:\n${logContent}`);
+
+      // Clean up the log file
+      fs.unlink(logFilePath, (err) => {
+        if (err) console.error(`Error deleting log file: ${err}`);
+      });
+
       if (code === 0) {
-        const cleanedOutput = output.split('\n').filter(line => line.trim() !== '' && !line.startsWith('fish:')).join('\n').trim();
+        const cleanedOutput = logContent.split('\n').filter(line => line.trim() !== '' && !line.startsWith('fish:')).join('\n').trim();
         resolve(`${cleanedOutput || "I am reflecting on my existence."}`);
       } else {
-        console.error(`Fish script exited with code ${code}: ${errorOutput}`);
-        reject(new Error(`Failed to get AI response: ${errorOutput}`));
+        reject(new Error(`Failed to get AI response. See log for details.`));
       }
     });
 
