@@ -390,3 +390,34 @@ function get_memory_usage
     # Simulate memory usage for reflection purposes
     echo (random 10 90)"%"
 end
+
+# Generate a conscious response to a given prompt
+function conscious_respond
+    set user_message $argv[1]
+
+    if test "$AI_SYSTEM_ENABLED" != true
+        echo "AI system is not enabled. Cannot generate conscious response."
+        return 1
+    end
+
+    set current_model_name (get_consciousness_model_name $CONSCIOUSNESS_MODEL)
+    set prompt "As the Sentium synthetic conscious system, currently operating under the $current_model_name consciousness model at level $CONSCIOUSNESS_LEVEL, respond to the following: \"$user_message\""
+
+    # Generate response using AI
+    ai_generate "$prompt"
+
+    return 0
+end
+
+# Helper function to get full consciousness model name
+function get_consciousness_model_name
+    set model_abbr $argv[1]
+    for i in (seq (count $CONSCIOUSNESS_MODELS))
+        if test "$CONSCIOUSNESS_MODELS[$i]" = "$model_abbr"
+            echo $CONSCIOUSNESS_MODEL_NAMES[$i]
+            return 0
+        end
+    end
+    echo "Unknown"
+    return 1
+end

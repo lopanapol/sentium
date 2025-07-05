@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentium Chat</title>
+    <style>
+        body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; }
+        #chat-container { width: 80%; max-width: 800px; border: 1px solid #ccc; padding: 20px; }
+        #messages { height: 400px; overflow-y: scroll; border-bottom: 1px solid #ccc; margin-bottom: 10px; }
+        #message-input { width: 100%; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Sentium Open Chat</h1>
+    <div id="chat-container">
+        <div id="messages"></div>
+        <input id="message-input" type="text" placeholder="Type your message...">
+    </div>
+    <script>
+        const messagesDiv = document.getElementById('messages');
+        const messageInput = document.getElementById('message-input');
+
+        messageInput.addEventListener('keypress', async (e) => {
+            if (e.key === 'Enter') {
+                const message = messageInput.value;
+                messageInput.value = '';
+
+                addMessage('You', message);
+
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message })
+                });
+
+                const data = await response.json();
+                addMessage('Sentium', data.reply);
+            }
+        });
+
+        function addMessage(sender, text) {
+            const messageElement = document.createElement('div');
+            messageElement.innerHTML = `<strong>${sender}:</strong> ${text}`;
+            messagesDiv.appendChild(messageElement);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+    </script>
+</body>
+</html>

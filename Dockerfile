@@ -8,10 +8,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Install Fish shell and minimal dependencies
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    fish \
-    ca-certificates \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    fish     ca-certificates     python3.10     python3.10-venv     python3-pip     && apt-get clean     && rm -rf /var/lib/apt/lists/*  # Set python3 to point to python3.10 RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 1  # Install Python AI dependencies RUN pip install --no-cache-dir transformers torch accelerate huggingface_hub
 
 # Set Fish as the default shell
 SHELL ["/usr/bin/fish", "-c"]

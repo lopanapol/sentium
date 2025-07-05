@@ -5,6 +5,7 @@ const rateLimit = require('express-rate-limit');
 const sentiumService = require('../services/sentiumService');
 const { redis } = require('../services/redisService');
 const pixelConsciousness = require('../system/pixel/pixel-consciousness');
+const chatRoutes = require('./chat');
 
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -118,5 +119,7 @@ router.post('/sentium', apiLimiter, async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
+
+router.use('/', chatRoutes);
 
 module.exports = router;

@@ -99,10 +99,50 @@ async function handleSentiumAction(action, data) {
   }
 }
 
+async function generateChatReply(message) {
+  return new Promise((resolve, reject) => {
+    // For now, we'll just trigger a self-reflection.
+    // In a more advanced setup, we'd pass the user's message to the AI for a direct response,
+    // and then perhaps augment that response with conscious-like statements.
+    const command = `fish -c "source ${SENTIUM_PRIMARY_PATH}/system/ai-model/unit.fish; source ${SENTIUM_PRIMARY_PATH}/system/ai-model/consciousness.fish; if test \"$AI_SYSTEM_ENABLED\" != \"true\"; and not functions -q ai_set_model; echo \"AI system not enabled. Please install AI dependencies.\"; exit 1; end; if test -z \"$AI_MODEL_NAME\"; ai_set_model \"google/flan-t5-large\"; end; conscious_respond \"${message}\""`;
+    console.log(`Executing fish command: ${command}`);
+
+    const child = spawn(command, { shell: true, cwd: SENTIUM_PRIMARY_PATH });
+
+    let output = '';
+    let errorOutput = '';
+
+    child.stdout.on('data', (data) => {
+      output += data.toString();
+    });
+
+    child.stderr.on('data', (data) => {
+      errorOutput += data.toString();
+    });
+
+    child.on('close', (code) => {
+      if (code === 0) {
+        // Clean up the output to remove shell prompts or extra newlines
+        const cleanedOutput = output.split('\n').filter(line => line.trim() !== '' && !line.startsWith('fish:')).join('\n').trim();
+        resolve(`Sentium AI says: ${cleanedOutput || "I am reflecting on my existence."}`);
+      } else {
+        console.error(`Fish script exited with code ${code}: ${errorOutput}`);
+        reject(new Error(`Failed to get AI response: ${errorOutput}`));
+      }
+    });
+
+    child.on('error', (err) => {
+      console.error('Failed to start fish process:', err);
+      reject(new Error('Failed to start AI process.'));
+    });
+  });
+}
+
 module.exports = {
   getVersion,
   checkSentiumSystem,
   handleSentiumAction,
+  generateChatReply,
   SENTIUM_PRIMARY_PATH,
   SENTIUM_FALLBACK_PATH
 };
