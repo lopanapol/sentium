@@ -7,15 +7,15 @@ let pathsConfig;
 try {
   pathsConfig = require('../config/paths');
 } catch (error) {
-  console.log('⚠️ Custom paths.js not found, using default paths');
+  console.log('Custom paths.js not found, using default paths');
   pathsConfig = {
     SENTIUM_PRIMARY_PATH: '/Users/lopanapol/git-repo/sentium',
     SENTIUM_FALLBACK_PATH: '/Users/lopanapol/git-repo/sentium'
   };
 }
 
-const SENTIUM_PRIMARY_PATH = process.env.SENTIUM_PATH || pathsConfig.SENTIUM_PRIMARY_PATH;
-const SENTIUM_FALLBACK_PATH = process.env.SENTIUM_FALLBACK_PATH || pathsConfig.SENTIUM_FALLBACK_PATH;
+const SENTIUM_PRIMARY_PATH = pathsConfig.SENTIUM_PRIMARY_PATH;
+const SENTIUM_FALLBACK_PATH = pathsConfig.SENTIUM_FALLBACK_PATH;
 
 function getVersion() {
   try {
