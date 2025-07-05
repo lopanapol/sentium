@@ -6,8 +6,8 @@
 
 # unit.fish - AI integration with Hugging Face models for Sentium
 
-# Source consciousness module
-source system/ai-model/consciousness.fish
+
+
 
 # AI system settings
 set -g AI_SYSTEM_ENABLED false
@@ -294,7 +294,7 @@ function ai_emotional_response
     ai_generate "$prompt" > $temp_output
     
     # Process the output to extract just the response
-    set response (cat $temp_output | string replace -r "^.*?:" "" | head -1)
+    set response (cat $temp_output | string replace -r "^.*?" "" | head -1)
     
     # Clean up
     rm -f $temp_output

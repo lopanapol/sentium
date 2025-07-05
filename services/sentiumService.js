@@ -100,13 +100,27 @@ async function handleSentiumAction(action, data) {
 
 async function generateChatReply(message) {
   return new Promise((resolve, reject) => {
-    // For now, we'll just trigger a self-reflection.
-    // In a more advanced setup, we'd pass the user's message to the AI for a direct response,
-    // and then perhaps augment that response with conscious-like statements.
-    const script = `source ${SENTIUM_PRIMARY_PATH}/system/ai-model/unit.fish; source ${SENTIUM_PRIMARY_PATH}/system/ai-model/consciousness.fish; if test \"$AI_SYSTEM_ENABLED\" != \"true\"; and not functions -q ai_set_model; echo \"AI system not enabled. Please install AI dependencies.\"; exit 1; end; if test -z \"$AI_MODEL_NAME\"; ai_set_model \"google/flan-t5-large\"; end; conscious_respond \"${message}\"`;
-    console.log(`Executing fish script: ${script}`);
+    const scriptContent = `#!/usr/bin/env fish
+source ${SENTIUM_PRIMARY_PATH}/system/ai-model/unit.fish
 
-    const child = spawn('/usr/local/bin/fish', ['-c', script], { cwd: SENTIUM_PRIMARY_PATH });
+if test "$AI_SYSTEM_ENABLED" != "true"; and not functions -q ai_set_model
+    echo "AI system not enabled. Please install AI dependencies."
+    exit 1
+end
+
+if test -z "$AI_MODEL_NAME"
+    ai_set_model "google/flan-t5-large"
+end
+
+conscious_respond "${message}"
+`;
+
+    const tempScriptPath = path.join(SENTIUM_PRIMARY_PATH, `temp_script_${Date.now()}.fish`);
+    fs.writeFileSync(tempScriptPath, scriptContent, { mode: 0o755 }); // Make it executable
+
+    console.log(`Executing fish script from temporary file: ${tempScriptPath}`);
+
+    const child = spawn('/usr/local/bin/fish', [tempScriptPath], { cwd: SENTIUM_PRIMARY_PATH });
 
     let output = '';
     let errorOutput = '';
@@ -120,15 +134,25 @@ async function generateChatReply(message) {
     });
 
     child.on('close', (code) => {
+      // Clean up the temporary script file
+      fs.unlink(tempScriptPath, (err) => {
+        if (err) console.error(`Error deleting temporary script file: ${err}`);
+      });
+
       if (code === 0) {
-        // Clean up the output to remove shell prompts or extra newlines
-        const cleanedOutput = output.split('\n').filter(line => line.trim() !== '' && !line.startsWith('fish:')).join('\n').trim();        resolve(`${cleanedOutput || "I am reflecting on my existence."}`);      } else {
+        const cleanedOutput = output.split('\n').filter(line => line.trim() !== '' && !line.startsWith('fish:')).join('\n').trim();
+        resolve(`${cleanedOutput || "I am reflecting on my existence."}`);
+      } else {
         console.error(`Fish script exited with code ${code}: ${errorOutput}`);
         reject(new Error(`Failed to get AI response: ${errorOutput}`));
       }
     });
 
     child.on('error', (err) => {
+      // Clean up the temporary script file in case of spawn error
+      fs.unlink(tempScriptPath, (unlinkErr) => {
+        if (unlinkErr) console.error(`Error deleting temporary script file after spawn error: ${unlinkErr}`);
+      });
       console.error('Failed to start fish process:', err);
       reject(new Error('Failed to start AI process.'));
     });
