@@ -10,8 +10,8 @@ try {
 } catch (error) {
   console.log('⚠️ Custom paths.js not found, using default paths');
   pathsConfig = {
-    SENTIUM_PRIMARY_PATH: '/opt/sentium',
-    SENTIUM_FALLBACK_PATH: '/opt/sentium'
+    SENTIUM_PRIMARY_PATH: '/Users/lopanapol/git-repo/sentium',
+    SENTIUM_FALLBACK_PATH: '/Users/lopanapol/git-repo/sentium'
   };
 }
 

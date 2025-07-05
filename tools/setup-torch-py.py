@@ -161,9 +161,9 @@ sys.modules['torch'] = FakeTorch()
 warnings.warn("Using PyTorch compatibility layer. Limited functionality available.")
 print("Enhanced PyTorch compatibility layer initialized for Python 3.13+")
 """
-        with open(os.path.expanduser("~/.sentium/torch_compat.py"), "w") as f:
-            f.write(compat_code)
-        return True
+    with open(os.path.expanduser("~/.sentium/torch_compat.py"), "w") as f:
+        f.write(compat_code)
+    return True
     return False
 
 def install_transformers():
